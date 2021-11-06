@@ -1,0 +1,132 @@
+ <!DOCTYPE html>
+  <html>
+    <head>
+      <!--Import Google Icon Font-->
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <!--Import materialize.css-->
+      <link type="text/css" rel="stylesheet" href="./assets/css/materialize.min.css"  media="screen,projection"/>
+      <link type="text/css" rel="stylesheet" href="./assets/css/ourStyles.css"/>
+      <!--Let browser know website is optimized for mobile-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+      <!--Title for browser tab-->
+      <title>Weather Dashboard</title>
+    </head>
+
+    <body>
+        <header class='row'>
+            <nav>
+                <div class="nav-wrapper">
+                  <a href="#" class="brand-logo">Weather DashBoard</a>
+                  <ul id="nav-mobile" class="right hide-on-med-and-down">
+                    <li><a href="sass.html"></a></li>
+                    <li><a href="badges.html">Components</a></li>
+                    <li><a href="collapsible.html">JavaScript</a></li>
+                  </ul>
+                </div>
+            </nav>           
+        </header> 
+        <main class='row'>
+            <aside class='col s2'>
+              <form class="col s12"> 
+                  <div class="row">
+                    <div class="input-field col s12">
+                      <input placeholder="Enter a city" id="city_name" class="materialize-textarea" type="text"></input>
+                      <label for="city_name">City</label>
+                    </div>
+                  </div>              
+                  <ul class="collection">
+                      <li class="collection-item">Alvin</li>
+                      <li class="collection-item">Alvin</li>
+                      <li class="collection-item">Alvin</li>
+                      <li class="collection-item">Alvin</li>
+                  </ul>
+              </form>           
+              <button id="get-location" onclick="getLatLon()">
+                Get My Location
+              </button>
+            </aside>
+            <content class='col s10'>
+                <section class='row'>
+                    <figure class='col m10'>
+                    <img src="http://placekitten.com/g/200/300">
+                    </figure>
+                </section>
+                <div id="results" class="row">
+                <div class="col s6 m2">
+                    <div class="card blue-grey darken-1">
+                      <div class="card-content white-text">
+                        <span class="card-title">Card Title</span>
+                        <p>I am a very simple card. I am good at containing small bits of information.
+                        I am convenient because I require little markup to use effectively.</p>
+                      </div>
+                      <div class="card-action">
+                        <a href="#">This is a link</a>
+                        <a href="#">This is a link</a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col s6 m2">
+                    <div class="card blue-grey darken-1">
+                      <div class="card-content white-text">
+                        <span class="card-title">Card Title</span>
+                        <p>I am a very simple card. I am good at containing small bits of information.
+                        I am convenient because I require little markup to use effectively.</p>
+                      </div>
+                      <div class="card-action">
+                        <a href="#">This is a link</a>
+                        <a href="#">This is a link</a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col s6 m2">
+                    <div class="card blue-grey darken-1">
+                      <div class="card-content white-text">
+                        <span class="card-title">Card Title</span>
+                        <p>I am a very simple card. I am good at containing small bits of information.
+                        I am convenient because I require little markup to use effectively.</p>
+                      </div>
+                      <div class="card-action">
+                        <a href="#">This is a link</a>
+                        <a href="#">This is a link</a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col s6 m2">
+                    <div class="card blue-grey darken-1">
+                      <div class="card-content white-text">
+                        <span class="card-title">Card Title</span>
+                        <p>I am a very simple card. I am good at containing small bits of information.
+                        I am convenient because I require little markup to use effectively.</p>
+                      </div>
+                      <div class="card-action">
+                        <a href="#">This is a link</a>
+                        <a href="#">This is a link</a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col s6 m2">
+                    <div class="card blue-grey darken-1">
+                      <div class="card-content white-text">
+                        <span class="card-title">Card Title</span>
+                        <p>I am a very simple card. I am good at containing small bits of information.
+                        I am convenient because I require little markup to use effectively.</p>
+                      </div>
+                      <div class="card-action">
+                        <a href="#">This is a link</a>
+                        <a href="#">This is a link</a>
+                      </div>
+                    </div>
+                  </div>
+                  
+                </div>
+            </content>
+        </main>
+        
+
+      <!--JavaScript at end of body for optimized loading-->
+      <script src="./assets/js/materialize.min.js"></script>
+      <script src="./assets/js/script.js"></script>
+      <script src="./assets/js/weather.js"></script>
+    </body>
+  </html>
+        
