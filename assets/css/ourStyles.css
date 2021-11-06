@@ -1,3 +1,16 @@
 figure{
 background-color: yellow;
+height: 250px;
+}
+
+button {
+    width: 100%;
+}
+
+#city_name {    
+    padding-top: 10px;
+}
+
+h5 {
+    margin-top: 0px;
 }
