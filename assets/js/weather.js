@@ -31,15 +31,15 @@ function getWeather(userCityLat, userCityLon, cityName) {
         var cHumidity = currWeather.humidity;
         var cWindSpeed = currWeather.wind_speed;
         var cUvi = currWeather.uvi;
-        populateCurrCard(weatherCity, cDate, cTemp, cHumidity, cWindSpeed, cUvi);
+        populateCurrCard(weatherCity, cDate, cTemp, cHumidity, cUvi, cWindSpeed);
 
         var dailyWeather = data.daily;
         for (i = 1; i < 6; i++) {
           var longDate = dailyWeather[i].dt;          
           var d = new Date(longDate * 1000);          
           var sDate = d.toDateString(longDate);          
-          var dTempL = dailyWeather[i].temp.max;
-          var dTempH = dailyWeather[i].temp.min;
+          var dTempL = dailyWeather[i].temp.min;
+          var dTempH = dailyWeather[i].temp.max;
           var dHumidity = dailyWeather[i].humidity;
           var dWindSpeed = dailyWeather[i].wind_speed;
           var dUvi = dailyWeather[i].uvi;
@@ -48,7 +48,7 @@ function getWeather(userCityLat, userCityLon, cityName) {
     });
 }
 
-function populateCurrCard(city, date, temp, windSpeed, humidity, uvi) {
+function populateCurrCard(city, date, temp, cHumidity, uvi, cWindSpeed) {
   var currDay = document.getElementById("currDayData");
 
   var currDayTitle = document.createElement("h4");
@@ -62,14 +62,9 @@ function populateCurrCard(city, date, temp, windSpeed, humidity, uvi) {
   currDayTemp.textContent = "Temp: " + temp;
   currDay.appendChild(currDayTemp);
 
-  var currDayWindSpeed = document.createElement("p");
-  currDayWindSpeed.setAttribute("id", "currWindSpeed");
-  currDayWindSpeed.textContent = "Wind: " + windSpeed + " MPH";
-  currDay.appendChild(currDayWindSpeed);
-
   var currDayHumidity = document.createElement("p");
   currDayHumidity.setAttribute("id", "currHumidity");
-  currDayHumidity.textContent = "Humidity: " + humidity + ` %`;
+  currDayHumidity.textContent = "Humidity: " + cHumidity + ` %`;
   currDay.appendChild(currDayHumidity);
 
   var currDayUvi = document.createElement("p");
@@ -77,9 +72,13 @@ function populateCurrCard(city, date, temp, windSpeed, humidity, uvi) {
   currDayUvi.textContent = "UV Index: " + uvi;
   currDay.appendChild(currDayUvi);
 
+  var currDayWindSpeed = document.createElement("p");
+  currDayWindSpeed.setAttribute("id", "currWindSpeed");
+  currDayWindSpeed.textContent = "Wind: " + cWindSpeed + " MPH";
+  currDay.appendChild(currDayWindSpeed);
 }
 
-function populateFutureCards(date, tempL, tempH, humidity, windSpeed) {
+function populateFutureCards(date, dTempL, dTempH, dHumidity, dWindSpeed) {
   var results = document.getElementById("card-data");  
 
   var resultsTitle = document.createElement("p");
@@ -90,22 +89,22 @@ function populateFutureCards(date, tempL, tempH, humidity, windSpeed) {
   
   var resultsIcon = document.createElement("p");
   resultsIcon.setAttribute("id", "icon");
-  resultsIcon.textContent = "icon here";
+  resultsIcon.textContent = "WEATHER ICON HERE";
   results.appendChild(resultsIcon);
   
   var resultsTemp = document.createElement("p");
   resultsTemp.setAttribute("id", "temp");  
-  resultsTemp.textContent = "Temp: " + tempH + " / " + tempL;
+  resultsTemp.textContent = "Temp: (L) " + dTempL + " / (H) " + dTempH;
   results.appendChild(resultsTemp);
+
+  var resultsHumidity = document.createElement("p");
+  resultsHumidity.setAttribute("id", "humidity");
+  resultsHumidity.textContent = "Humidity: " + dHumidity + ` %`;
+  results.appendChild(resultsHumidity);
 
   var resultsWind = document.createElement("p");
   resultsWind.setAttribute("id", "wind");
-  resultsWind.textContent = "Wind: " + windSpeed + " MPH";
+  resultsWind.textContent = "Wind: " + dWindSpeed + " MPH";
   results.appendChild(resultsWind);
-  
-  var resultsHumidity = document.createElement("p");
-  resultsHumidity.setAttribute("id", "humidity");
-  resultsHumidity.textContent = "Humidity: " + humidity + ` %`;
-  results.appendChild(resultsHumidity);
 
 }
