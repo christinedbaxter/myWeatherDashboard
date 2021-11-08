@@ -1,4 +1,4 @@
-figure{
+figure {
 background-color: yellow;
 height: 250px;
 }
@@ -13,4 +13,28 @@ button {
 
 h5 {
     margin-top: 0px;
+}
+
+nav {
+    text-align: center;
+}
+
+nav .brand-logo {
+    position: relative;
+}
+
+.divider {
+    margin: 0;
+    margin-top: 2px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    margin-bottom: 2px;
+}
+
+.card-content .white-text {
+    padding: 20px;
+}
+
+#card-title {
+    margin-bottom: 2px;
 }

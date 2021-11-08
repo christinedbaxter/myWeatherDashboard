@@ -22,8 +22,8 @@ function getWeather(userCityLat, userCityLon, cityName) {
     .then(function (res) {
       return res.json();
     })
-    .then(function (data) {      
-        var currWeather = data.current;
+    .then(function (data) {
+        var currWeather = data.current;     
         var longDate = currWeather.dt;
         var d = new Date(longDate * 1000);
         var cDate = d.toDateString(longDate);
@@ -52,13 +52,13 @@ function populateCurrCard(city, date, temp, cHumidity, uvi, cWindSpeed) {
   var currDay = document.getElementById("currDayData");
 
   var currDayTitle = document.createElement("h4");
-  currDayTitle.setAttribute("id", "card-title");
-  currDayTitle.setAttribute("class", "card-title");
+  currDayTitle.setAttribute("id", "cardTitle");
+  currDayTitle.setAttribute("class", "cardTitle");
   currDayTitle.textContent = city + " (" + date + ")";
   currDay.appendChild(currDayTitle);
 
   var currDayTemp = document.createElement("p");
-  currDayTemp.setAttribute("id", "currTemp");
+  currDayTemp.setAttribute("id", "currTemp");  
   currDayTemp.textContent = "Temp: " + temp;
   currDay.appendChild(currDayTemp);
 
@@ -79,32 +79,46 @@ function populateCurrCard(city, date, temp, cHumidity, uvi, cWindSpeed) {
 }
 
 function populateFutureCards(date, dTempL, dTempH, dHumidity, dWindSpeed) {
-  var results = document.getElementById("card-data");  
+  var results = document.getElementById("futureDayResults");
+
+  var resultsDiv = document.createElement("div");
+  resultsDiv.setAttribute("id", "futureDayData");
+  resultsDiv.setAttribute("class", "col s6 m4");
+  results.appendChild(resultsDiv);
+
+  var resultsCardData = document.createElement("div");
+  resultsCardData.setAttribute("id", "card-data");
+  resultsCardData.setAttribute("class", "card blue-grey darken-1");
+  resultsDiv.appendChild(resultsCardData);
+
+  var resultsCard = document.createElement("div");
+  resultsCard.setAttribute("class", "card-content white-text");
+  resultsCardData.appendChild(resultsCard);
 
   var resultsTitle = document.createElement("p");
-  resultsTitle.setAttribute("id", "card-title");
-  resultsTitle.setAttribute("class", "card-title");
+  resultsTitle.setAttribute("id", "cardTitle");
+  resultsTitle.setAttribute("class", "cardTitle");
   resultsTitle.textContent = date;
-  results.appendChild(resultsTitle);
+  resultsCard.appendChild(resultsTitle);
   
   var resultsIcon = document.createElement("p");
   resultsIcon.setAttribute("id", "icon");
+  resultsIcon.setAttribute("class", "divider")
   resultsIcon.textContent = "WEATHER ICON HERE";
-  results.appendChild(resultsIcon);
+  resultsCard.appendChild(resultsIcon);
   
   var resultsTemp = document.createElement("p");
   resultsTemp.setAttribute("id", "temp");  
   resultsTemp.textContent = "Temp: (L) " + dTempL + " / (H) " + dTempH;
-  results.appendChild(resultsTemp);
+  resultsCard.appendChild(resultsTemp);
 
   var resultsHumidity = document.createElement("p");
   resultsHumidity.setAttribute("id", "humidity");
   resultsHumidity.textContent = "Humidity: " + dHumidity + ` %`;
-  results.appendChild(resultsHumidity);
+  resultsCard.appendChild(resultsHumidity);
 
   var resultsWind = document.createElement("p");
   resultsWind.setAttribute("id", "wind");
   resultsWind.textContent = "Wind: " + dWindSpeed + " MPH";
-  results.appendChild(resultsWind);
-
+  resultsCard.appendChild(resultsWind);
 }
