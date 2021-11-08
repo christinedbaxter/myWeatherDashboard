@@ -22,8 +22,8 @@ function getWeather(userCityLat, userCityLon, cityName) {
     .then(function (res) {
       return res.json();
     })
-    .then(function (data) {      
-        var currWeather = data.current;
+    .then(function (data) {
+        var currWeather = data.current;     
         var longDate = currWeather.dt;
         var d = new Date(longDate * 1000);
         var cDate = d.toDateString(longDate);
@@ -52,8 +52,8 @@ function populateCurrCard(city, date, temp, cHumidity, uvi, cWindSpeed) {
   var currDay = document.getElementById("currDayData");
 
   var currDayTitle = document.createElement("h4");
-  currDayTitle.setAttribute("id", "card-title");
-  currDayTitle.setAttribute("class", "card-title");
+  currDayTitle.setAttribute("id", "cardTitle");
+  currDayTitle.setAttribute("class", "cardTitle");
   currDayTitle.textContent = city + " (" + date + ")";
   currDay.appendChild(currDayTitle);
 
@@ -79,9 +79,10 @@ function populateCurrCard(city, date, temp, cHumidity, uvi, cWindSpeed) {
 }
 
 function populateFutureCards(date, dTempL, dTempH, dHumidity, dWindSpeed) {
-  var results = document.getElementById("results");
+  var results = document.getElementById("futureDayResults");
 
   var resultsDiv = document.createElement("div");
+  resultsDiv.setAttribute("id", "futureDayData");
   resultsDiv.setAttribute("class", "col s6 m4");
   results.appendChild(resultsDiv);
 
@@ -95,8 +96,8 @@ function populateFutureCards(date, dTempL, dTempH, dHumidity, dWindSpeed) {
   resultsCardData.appendChild(resultsCard);
 
   var resultsTitle = document.createElement("p");
-  resultsTitle.setAttribute("id", "card-title");
-  resultsTitle.setAttribute("class", "card-title");
+  resultsTitle.setAttribute("id", "cardTitle");
+  resultsTitle.setAttribute("class", "cardTitle");
   resultsTitle.textContent = date;
   resultsCard.appendChild(resultsTitle);
   
@@ -120,5 +121,4 @@ function populateFutureCards(date, dTempL, dTempH, dHumidity, dWindSpeed) {
   resultsWind.setAttribute("id", "wind");
   resultsWind.textContent = "Wind: " + dWindSpeed + " MPH";
   resultsCard.appendChild(resultsWind);
-
 }

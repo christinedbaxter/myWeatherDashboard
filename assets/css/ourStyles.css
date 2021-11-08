@@ -15,6 +15,14 @@ h5 {
     margin-top: 0px;
 }
 
+nav {
+    text-align: center;
+}
+
+nav .brand-logo {
+    position: relative;
+}
+
 .divider {
     margin: 0;
     margin-top: 2px;
