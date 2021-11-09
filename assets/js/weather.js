@@ -1,8 +1,9 @@
+
 // Get weather data
-function getWeather(userCityLat, userCityLon, cityName) {
-  var cityLat = userCityLat;
-  var cityLon = userCityLon;  
-  var weatherCity = cityName;  
+function getWeather() {  
+  var weatherCity = cities[j].name;
+  var cityLat = cities[j].latitude;
+  var cityLon = cities[j].longitude;  
   var weatherBaseUrl = "https://api.openweathermap.org/data/2.5/onecall?";  
   var weatherCityLat = "lat=" + cityLat;
   var weatherCityLon = "&lon=" + cityLon;  
@@ -29,21 +30,21 @@ function getWeather(userCityLat, userCityLon, cityName) {
         var cDate = d.toDateString(longDate);
         var cTemp = currWeather.temp;
         var cHumidity = currWeather.humidity;
-        var cWindSpeed = currWeather.wind_speed;
         var cUvi = currWeather.uvi;
+        var cWindSpeed = currWeather.wind_speed;        
         populateCurrCard(weatherCity, cDate, cTemp, cHumidity, cUvi, cWindSpeed);
 
         var dailyWeather = data.daily;
-        for (i = 1; i < 6; i++) {
+        for (var i = 1; i < 6; i++) {
           var longDate = dailyWeather[i].dt;          
           var d = new Date(longDate * 1000);          
-          var sDate = d.toDateString(longDate);          
+          var dDate = d.toDateString(longDate);          
           var dTempL = dailyWeather[i].temp.min;
           var dTempH = dailyWeather[i].temp.max;
           var dHumidity = dailyWeather[i].humidity;
           var dWindSpeed = dailyWeather[i].wind_speed;
           var dUvi = dailyWeather[i].uvi;
-          populateFutureCards(sDate, dTempL, dTempH, dHumidity, dWindSpeed, dUvi);
+          populateFutureCards(dDate, dTempL, dTempH, dHumidity, dWindSpeed, dUvi);
         }
     });
 }
