@@ -1,9 +1,17 @@
 
 // Get weather data
 function getWeather() {  
+  
+  console.log(cities);
+  
+  console.log(j);
+  console.log(cities[j].name);
+
   var weatherCity = cities[j].name;
+  console.log(weatherCity);
   var cityLat = cities[j].latitude;
-  var cityLon = cities[j].longitude;  
+  var cityLon = cities[j].longitude;
+  
   var weatherBaseUrl = "https://api.openweathermap.org/data/2.5/onecall?";  
   var weatherCityLat = "lat=" + cityLat;
   var weatherCityLon = "&lon=" + cityLon;  

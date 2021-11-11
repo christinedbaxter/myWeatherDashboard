@@ -4,8 +4,9 @@ var futureDayResultsEl = document.getElementById("futureDayResults");
 var cityNameEl = document.querySelector("input");
 var currDayCardTitleEl = document.querySelector("cardTitle");
 var CITY = "";
-const cities = [{ name: "", latitude: "", longitude: "" }];
-var j = 0;
+var cities = [{}];
+var cityId = "", cityLat = "", cityLon = "";
+var j = 1;
 
 function searchBtn() {    
   var CITY = cityNameEl.value;  
@@ -15,16 +16,18 @@ function searchBtn() {
     
   if (currDayDataEl.childElementCount === 0) {
     getLatLon(CITY);
-    getWeather();
-    addToLocalStorage();
+    getWeather();        
     populateSearchedCities(cities);
+    j++;
+    addToLocalStorage();
   } else {
     currDayDataEl.replaceChildren();
     futureDayResultsEl.replaceChildren();    
     getLatLon(CITY);    
-    getWeather();
-    addToLocalStorage();
+    getWeather();    
     populateSearchedCities(cities);
+    j++;
+    addToLocalStorage();
   }
 };
 
@@ -42,16 +45,20 @@ function getLatLon(CITY) {
     .then(function (data) {
       console.log(j);
       console.log(k);
-      cities[j].name = CITY;
-      cities[j].latitude = data[0].lat;
-      cities[j].longitude = data[0].lon;
-      cities.push({ "name": cities.name, "latitude": cities.latitude, "longitude": cities.longitude })[k];
+      cityId = CITY;      
+      cityLat = data[0].lat;
+      cityLon = data[0].lon;
+      console.log(cityId, cityLat, cityLon);
+      cities.push({ "name": cityId, "latitude": cityLat, "longitude": cityLon })[k];
+
       console.log(j);
       console.log(k);
-      j++;
+      console.log(cities[j]);
+      
       k++;
       console.log(j);
       console.log(k);
+      
     });  
 };
 
@@ -62,11 +69,11 @@ function addToLocalStorage() {
 function populateSearchedCities(cities) {
   console.log(cities);
     
-  var CITY = cities[j] ['name'][value] ;
+  var CITY = cities[j].name;
 
   var lat = cities[j].latitude;
   var lon = cities[j].longitude;
-  
+  console.log(j);
   console.log(CITY, lat, lon);
 
   var weatherBaseUrl = "https://api.openweathermap.org/data/2.5/onecall?";
