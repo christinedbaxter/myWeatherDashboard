@@ -24,11 +24,7 @@ function searchBtn() {
 };
 
 function getLatLon(CITY) {
-  var weatherBaseUrl = "https://api.openweathermap.org/geo/1.0/direct?";
-  var weatherCity = "q=" + CITY;
-  var weatherAppId = "&appid=8c2f82b97567bfc31f8b04c83b3f13c5";
-  var requestUrl = weatherBaseUrl + weatherCity + weatherAppId;
-  var k = cities.length;
+  var requestUrl = getURL(CITY);
 
   fetch(requestUrl)
     .then(function (res) {
@@ -57,25 +53,15 @@ function populateSearchedCities() {
   var CITY = cities[j].cityId;
   var lat = cities[j].cityLat;
   var lon = cities[j].cityLon;
-  var weatherBaseUrl = "https://api.openweathermap.org/data/2.5/onecall?";
-  var weatherCityLat = "lat=" + lat;
-  var weatherCityLon = "&lon=" + lon;
-  var weatherExclude = "&exclude=minutely,hourly,alerts";
-  var weatherUnits = "&units=imperial";
-  var weatherAppId = "&appid=8c2f82b97567bfc31f8b04c83b3f13c5";
+  var savedCityLink = getURL(CITY, lat, lon);
+
   var searchedCityEl = document.getElementById("localStorage");
   var searchedCollectionItem = document.createElement("li");
 
   searchedCollectionItem.setAttribute("class", "collection-item");
   searchedCollectionItem.setAttribute("id", "savedCity");
   searchedCollectionItem.textContent = CITY;
-  var savedCityUrl =
-    weatherBaseUrl +
-    weatherCityLat +
-    weatherCityLon +
-    weatherExclude +
-    weatherUnits +
-    weatherAppId;
-  searchedCollectionItem.innerHTML = `<a href=${savedCityUrl}>${CITY}</a>`;
+
+  searchedCollectionItem.innerHTML = `<a href=${savedCityLink}>${CITY}</a>`;
   searchedCityEl.appendChild(searchedCollectionItem);
 };
