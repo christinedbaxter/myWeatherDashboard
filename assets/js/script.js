@@ -4,30 +4,30 @@ var futureDayResultsEl = document.getElementById("futureDayResults");
 var cityNameEl = document.querySelector("input");
 var currDayCardTitleEl = document.querySelector("cardTitle");
 var CITY = "";
-var cities = [{}];
+var cities = [], cityData = {};
 var cityId = "", cityLat = "", cityLon = "";
-var j = 1;
+var j = 0;
 
-function searchBtn() {    
-  var CITY = cityNameEl.value;  
+function searchBtn() {
+  var CITY = cityNameEl.value;
   var currDayDataEl = document.querySelector("figure");
   var futureDayResultsEl = document.getElementById("futureDayResults");
   formEl.reset();
-    
+
   if (currDayDataEl.childElementCount === 0) {
     getLatLon(CITY);
-    getWeather();        
-    populateSearchedCities(cities);
-    j++;
-    addToLocalStorage();
+    //getWeather();
+    //populateSearchedCities(cities);
+    //j++;
+    //addToLocalStorage();
   } else {
     currDayDataEl.replaceChildren();
-    futureDayResultsEl.replaceChildren();    
-    getLatLon(CITY);    
-    getWeather();    
-    populateSearchedCities(cities);
-    j++;
-    addToLocalStorage();
+    futureDayResultsEl.replaceChildren();
+    getLatLon(CITY);
+    //getWeather();
+    // populateSearchedCities(cities);
+    // j++;
+    // addToLocalStorage();
   }
 };
 
@@ -45,34 +45,44 @@ function getLatLon(CITY) {
     .then(function (data) {
       console.log(j);
       console.log(k);
-      cityId = CITY;      
+      cityId = CITY;
       cityLat = data[0].lat;
       cityLon = data[0].lon;
+      cityData = { cityId, cityLat, cityLon };
+      console.log(cityData);
+      console.log(cityData["cityId"]);
       console.log(cityId, cityLat, cityLon);
-      cities.push({ "name": cityId, "latitude": cityLat, "longitude": cityLon })[k];
+      cities.push(cityData);
+      // cities.push({ "name": cityId, "latitude": cityLat, "longitude": cityLon })[k];
+      console.log(cities);
 
       console.log(j);
       console.log(k);
-      console.log(cities[j]);
-      
+      console.log(cityData);
+
       k++;
       console.log(j);
       console.log(k);
-      
-    });  
+    })
+    .then(function (cities) {
+      getWeather(cities, j);
+      populateSearchedCities(cities, j);
+      addToLocalStorage(cities);
+      j++;
+    });
 };
 
-function addToLocalStorage() {  
+function addToLocalStorage() {
   localStorage.setItem("cities", JSON.stringify(cities));
 }
 
-function populateSearchedCities(cities) {
+function populateSearchedCities() {
   console.log(cities);
-    
-  var CITY = cities[j].name;
 
-  var lat = cities[j].latitude;
-  var lon = cities[j].longitude;
+  var CITY = cities[j].cityId;
+
+  var lat = cities[j].cityLat;
+  var lon = cities[j].cityLon;
   console.log(j);
   console.log(CITY, lat, lon);
 
@@ -92,8 +102,9 @@ function populateSearchedCities(cities) {
     weatherBaseUrl +
     weatherCityLat +
     weatherCityLon +
+    weatherExclude +
     weatherUnits +
     weatherAppId;
-  searchedCollectionItem.innerHTML = `<a href=${savedCityUrl}>${CITY}</a>`;  
+  searchedCollectionItem.innerHTML = `<a href=${savedCityUrl}>${CITY}</a>`;
   searchedCityEl.appendChild(searchedCollectionItem);
 };

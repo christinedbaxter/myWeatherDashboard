@@ -1,63 +1,64 @@
 
 // Get weather data
-function getWeather() {  
-  
-  console.log(cities);
-  
-  console.log(j);
-  console.log(cities[j].name);
+function getWeather() {
 
-  var weatherCity = cities[j].name;
-  console.log(weatherCity);
-  var cityLat = cities[j].latitude;
-  var cityLon = cities[j].longitude;
-  
-  var weatherBaseUrl = "https://api.openweathermap.org/data/2.5/onecall?";  
+  console.log(cities);
+
+  console.log(j);
+  //console.log(cities[j].name);
+
+  var weatherCity = cities[j].cityId;
+  var cityLat = cities[j].cityLat;
+  var cityLon = cities[j].cityLon;
+  console.log(weatherCity, cityLat, cityLon);
+
+  var weatherBaseUrl = "https://api.openweathermap.org/data/2.5/onecall?";
   var weatherCityLat = "lat=" + cityLat;
-  var weatherCityLon = "&lon=" + cityLon;  
+  var weatherCityLon = "&lon=" + cityLon;
   var weatherExclude = "&exclude=minutely,hourly,alerts";
   var weatherUnits = "&units=imperial";
-  var weatherAppId = "&appid=8c2f82b97567bfc31f8b04c83b3f13c5";  
+  var weatherAppId = "&appid=8c2f82b97567bfc31f8b04c83b3f13c5";
   var weatherIcon = "https://openweathermap.org/img/wn/";
   var requestUrl =
     weatherBaseUrl +
-    weatherCityLat + 
-    weatherCityLon + 
+    weatherCityLat +
+    weatherCityLon +
     weatherExclude +
-    weatherUnits + 
-    weatherAppId;    
+    weatherUnits +
+    weatherAppId;
 
   fetch(requestUrl)
     .then(function (res) {
       return res.json();
     })
     .then(function (data) {
-        var currWeather = data.current;     
-        var longDate = currWeather.dt;
-        var d = new Date(longDate * 1000);
-        var cDate = d.toDateString(longDate);
-        var cTemp = currWeather.temp;
-        var cHumidity = currWeather.humidity;
-        var cUvi = currWeather.uvi;
-        var cWindSpeed = currWeather.wind_speed;        
-        populateCurrCard(weatherCity, cDate, cTemp, cHumidity, cUvi, cWindSpeed);
+      var currWeather = data.current;
+      var longDate = currWeather.dt;
+      var d = new Date(longDate * 1000);
+      var cDate = d.toDateString(longDate);
+      var cTemp = currWeather.temp;
+      var cHumidity = currWeather.humidity;
+      var cUvi = currWeather.uvi;
+      var cWindSpeed = currWeather.wind_speed;
+      populateCurrCard(weatherCity, cDate, cTemp, cHumidity, cUvi, cWindSpeed);
 
-        var dailyWeather = data.daily;
-        for (var i = 1; i < 6; i++) {
-          var longDate = dailyWeather[i].dt;          
-          var d = new Date(longDate * 1000);          
-          var dDate = d.toDateString(longDate);          
-          var dTempL = dailyWeather[i].temp.min;
-          var dTempH = dailyWeather[i].temp.max;
-          var dHumidity = dailyWeather[i].humidity;
-          var dWindSpeed = dailyWeather[i].wind_speed;
-          var dUvi = dailyWeather[i].uvi;
-          populateFutureCards(dDate, dTempL, dTempH, dHumidity, dWindSpeed, dUvi);
-        }
+      var dailyWeather = data.daily;
+      for (var i = 1; i < 6; i++) {
+        var longDate = dailyWeather[i].dt;
+        var d = new Date(longDate * 1000);
+        var dDate = d.toDateString(longDate);
+        var dTempL = dailyWeather[i].temp.min;
+        var dTempH = dailyWeather[i].temp.max;
+        var dHumidity = dailyWeather[i].humidity;
+        var dWindSpeed = dailyWeather[i].wind_speed;
+        var dUvi = dailyWeather[i].uvi;
+        populateFutureCards(dDate, dTempL, dTempH, dHumidity, dWindSpeed, dUvi);
+      }
     });
 }
 
 function populateCurrCard(city, date, temp, cHumidity, uvi, cWindSpeed) {
+  console.log(city, date, temp, cHumidity, uvi, cWindSpeed);
   var currDay = document.getElementById("currDayData");
 
   var currDayTitle = document.createElement("h4");
@@ -67,7 +68,7 @@ function populateCurrCard(city, date, temp, cHumidity, uvi, cWindSpeed) {
   currDay.appendChild(currDayTitle);
 
   var currDayTemp = document.createElement("p");
-  currDayTemp.setAttribute("id", "currTemp");  
+  currDayTemp.setAttribute("id", "currTemp");
   currDayTemp.textContent = "Temp: " + temp;
   currDay.appendChild(currDayTemp);
 
@@ -88,6 +89,7 @@ function populateCurrCard(city, date, temp, cHumidity, uvi, cWindSpeed) {
 }
 
 function populateFutureCards(date, dTempL, dTempH, dHumidity, dWindSpeed) {
+  console.log(date, dTempL, dTempH, dHumidity, dWindSpeed);
   var results = document.getElementById("futureDayResults");
 
   var resultsDiv = document.createElement("div");
@@ -109,15 +111,15 @@ function populateFutureCards(date, dTempL, dTempH, dHumidity, dWindSpeed) {
   resultsTitle.setAttribute("class", "cardTitle");
   resultsTitle.textContent = date;
   resultsCard.appendChild(resultsTitle);
-  
+
   var resultsIcon = document.createElement("p");
   resultsIcon.setAttribute("id", "icon");
   resultsIcon.setAttribute("class", "divider")
   resultsIcon.textContent = "WEATHER ICON HERE";
   resultsCard.appendChild(resultsIcon);
-  
+
   var resultsTemp = document.createElement("p");
-  resultsTemp.setAttribute("id", "temp");  
+  resultsTemp.setAttribute("id", "temp");
   resultsTemp.textContent = "Temp: (L) " + dTempL + " / (H) " + dTempH;
   resultsCard.appendChild(resultsTemp);
 
