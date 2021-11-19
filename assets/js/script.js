@@ -64,3 +64,7 @@ function populateSearchedCities() {
   searchedCollectionItem.innerHTML = `<a href=${savedCityLink}>${CITY}</a>`;
   searchedCityEl.appendChild(searchedCollectionItem);
 };
+
+function linkToSavedCity(CITY, j) {
+  getWeather(cities, j);
+}
