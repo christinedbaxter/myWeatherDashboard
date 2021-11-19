@@ -4,7 +4,7 @@ function getWeather() {
   var weatherCity = cities[j].cityId;
   var cityLat = cities[j].cityLat;
   var cityLon = cities[j].cityLon;
-  var requestUrl = getURL(weatherCity, cityLat, cityLon);
+  var requestUrl = getURL(weatherCity, cityLat, cityLon, undefined);
 
   fetch(requestUrl)
     .then(function (res) {
@@ -19,23 +19,22 @@ function getWeather() {
     });
 };
 
-function getURL(CITY, lat, lon) {
+function getURL(CITY, lat, lon, iconId) {
   var weatherCityLat = "lat=" + lat;
   var weatherCityLon = "&lon=" + lon;
   var weatherExclude = "&exclude=minutely,hourly,alerts";
   var weatherUnits = "&units=imperial";
   var weatherAppId = "&appid=8c2f82b97567bfc31f8b04c83b3f13c5";
   var weatherCity = "q=" + CITY;
-  var weatherMode = "&mode=html";
-  var weatherIcon = "https://openweathermap.org/img/wn/";
+  //var weatherMode = "&mode=html";  
 
-  if (!lat || !lon) {
-    var weatherBaseUrl = "https://api.openweathermap.org/geo/1.0/direct?";
-    //var weatherBaseUrl = "https://api.openweathermap.org/data/2.5/weather?"
+  if (iconId !== undefined) {
+    var weatherIconUrl = "http://openweathermap.org/img/wn/";
     var requestUrl =
-      weatherBaseUrl + weatherCity + weatherAppId;
+      weatherIconUrl +
+      iconId + "@2x.png";
     return requestUrl;
-  } else {
+  } else if (lat !== undefined && lon !== undefined) {
     var weatherBaseUrl = "https://api.openweathermap.org/data/2.5/onecall?";
     var requestUrl =
       weatherBaseUrl +
@@ -44,6 +43,11 @@ function getURL(CITY, lat, lon) {
       weatherExclude +
       weatherUnits +
       weatherAppId;
+    return requestUrl;
+  } else {
+    var weatherBaseUrl = "https://api.openweathermap.org/geo/1.0/direct?";
+    var requestUrl =
+      weatherBaseUrl + weatherCity + weatherAppId;
     return requestUrl;
   };
 };
@@ -57,9 +61,11 @@ function getCurrWeather(data) {
   var cHumidity = currWeather.humidity;
   var cUvi = currWeather.uvi;
   var cWindSpeed = currWeather.wind_speed;
+  var cWeatherIconId = currWeather.weather[0].icon;
+  var cWeatherIcon = getURL(undefined, undefined, undefined, cWeatherIconId);
   var currData = [];
 
-  currData.push({ cDate, cTemp, cHumidity, cUvi, cWindSpeed });
+  currData.push({ cDate, cWeatherIcon, cTemp, cHumidity, cUvi, cWindSpeed });
 
   return currData;
 }
@@ -72,6 +78,12 @@ function populateCurrCard(city, currData) {
   currDayTitle.setAttribute("class", "cardTitle");
   currDayTitle.textContent = city + " (" + currData[0].cDate + ")";
   currDay.appendChild(currDayTitle);
+
+  var currDayWeatherIcon = document.createElement("img");
+  currDayWeatherIcon.setAttribute("id", "currWeatherIcon");
+  currDayWeatherIcon.setAttribute("src", `${currData[0].cWeatherIcon}`);
+  currDayWeatherIcon.setAttribute("alt", "Icon that matches weather condition");
+  currDay.appendChild(currDayWeatherIcon);
 
   var currDayTemp = document.createElement("p");
   currDayTemp.setAttribute("id", "currTemp");
@@ -105,9 +117,11 @@ function getFutureWeather(dailyWeather) {
     var dHumidity = dailyWeather[i].humidity;
     var dWindSpeed = dailyWeather[i].wind_speed;
     var dUvi = dailyWeather[i].uvi;
+    var dWeatherIconId = dailyWeather[i].weather[0].icon;
+    var dWeatherIcon = getURL(undefined, undefined, undefined, dWeatherIconId);
 
-    futureData.push({ dDate, dTempL, dTempH, dHumidity, dUvi, dWindSpeed });
-  }
+    futureData.push({ dDate, dWeatherIcon, dTempL, dTempH, dHumidity, dUvi, dWindSpeed });
+  };
 
   return futureData;
 }
@@ -138,10 +152,14 @@ function populateFutureCards(dailyWeather) {
     resultsCard.appendChild(resultsTitle);
 
     var resultsIcon = document.createElement("p");
-    resultsIcon.setAttribute("id", "icon");
     resultsIcon.setAttribute("class", "divider")
-    resultsIcon.textContent = "WEATHER ICON HERE";
     resultsCard.appendChild(resultsIcon);
+
+    var resultsIconImg = document.createElement("img");
+    resultsIconImg.setAttribute("id", "futureWeatherIcon");
+    resultsIconImg.setAttribute("src", `${dailyWeather[i].dWeatherIcon}`);
+    resultsIconImg.setAttribute("alt", "Icon that matches weather condition");
+    resultsCard.appendChild(resultsIconImg);
 
     var resultsTemp = document.createElement("p");
     resultsTemp.setAttribute("id", "temp");

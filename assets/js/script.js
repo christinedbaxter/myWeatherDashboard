@@ -24,7 +24,7 @@ function searchBtn() {
 };
 
 function getLatLon(CITY) {
-  var requestUrl = getURL(CITY);
+  var requestUrl = getURL(CITY, undefined, undefined, undefined);
 
   fetch(requestUrl)
     .then(function (res) {
