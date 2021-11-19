@@ -97,8 +97,7 @@ function populateCurrCard(city, currData) {
   var currDayTitle = document.createElement("h4");
   currDayTitle.setAttribute("id", "cardTitle");
   currDayTitle.setAttribute("class", "cardTitle");
-  currDayTitle.innerHTML = `
-    ${city} ${currData[0].cDate} 
+  currDayTitle.innerHTML = `${city} (${currData[0].cDate}) 
     <span>
       <img id="currWeatherIcon" src="${currData[0].cWeatherIcon}" alt="${currData[0].cWeatherIconDesc}"</img>
     </span>

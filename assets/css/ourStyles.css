@@ -6,13 +6,9 @@
 	margin: 0;
 }
 
-figure {
-	border: 0.5px whitesmoke solid;
-	border-radius: 15px;
-}
-
 figure img {
 	width: 50px;
+	vertical-align: text-top;
 }
 
 figure p {
@@ -30,6 +26,9 @@ button {
 h4 {
 	color: whitesmoke;
 	background-color: rgba(0, 0, 0, 0.87);
+	vertical-align: middle;
+	padding: 0.25em;
+	margin-right: 195px;
 }
 
 h5 {
@@ -55,7 +54,6 @@ nav .brand-logo {
 
 #searchResultsContent {
 	background-image: url(../images/weatherStationBg.jpeg);
-	border-radius: 0.5;
 	background-size: contain;
 	background-repeat: no-repeat;
 	height: 50vh;
@@ -68,5 +66,5 @@ nav .brand-logo {
 }
 
 .cardTitle {
-	margin-bottom: 2px;
+	margin-bottom: 13.68px;
 }
