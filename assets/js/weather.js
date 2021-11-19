@@ -60,15 +60,37 @@ function getCurrWeather(data) {
   var cTemp = currWeather.temp;
   var cHumidity = currWeather.humidity;
   var cUvi = currWeather.uvi;
+  var cUviColor = getUviColor(cUvi);
   var cWindSpeed = currWeather.wind_speed;
+  var cWeatherIconDesc = currWeather.weather[0].description;
   var cWeatherIconId = currWeather.weather[0].icon;
   var cWeatherIcon = getURL(undefined, undefined, undefined, cWeatherIconId);
   var currData = [];
 
-  currData.push({ cDate, cWeatherIcon, cTemp, cHumidity, cUvi, cWindSpeed });
+  currData.push({ cDate, cWeatherIcon, cWeatherIconDesc, cTemp, cHumidity, cUvi, cUviColor, cWindSpeed });
 
   return currData;
 }
+
+function getUviColor(uvi) {
+  console.log(uvi);
+  var uviNum = uvi, color = "";
+
+  //Select correct UV background color based on Index value
+  if (uviNum >= 11) {
+    color = "violet";
+  } else if (uviNum >= 8) {
+    color = "red";
+  } else if (uviNum >= 6) {
+    color = "orange";
+  } else if (uviNum >= 3) {
+    color = "yellow";
+  } else {
+    color = "green";
+  };
+
+  return (color);
+};
 
 function populateCurrCard(city, currData) {
   var currDay = document.getElementById("currDayData");
@@ -82,7 +104,7 @@ function populateCurrCard(city, currData) {
   var currDayWeatherIcon = document.createElement("img");
   currDayWeatherIcon.setAttribute("id", "currWeatherIcon");
   currDayWeatherIcon.setAttribute("src", `${currData[0].cWeatherIcon}`);
-  currDayWeatherIcon.setAttribute("alt", "Icon that matches weather condition");
+  currDayWeatherIcon.setAttribute("alt", `${currData[0].cWeatherIconDesc}`);
   currDay.appendChild(currDayWeatherIcon);
 
   var currDayTemp = document.createElement("p");
@@ -97,6 +119,7 @@ function populateCurrCard(city, currData) {
 
   var currDayUvi = document.createElement("p");
   currDayUvi.setAttribute("id", "currUvi");
+  currDayUvi.setAttribute("style", `background-color: ${currData[0].cUviColor}`);
   currDayUvi.textContent = "UV Index: " + currData[0].cUvi;
   currDay.appendChild(currDayUvi);
 
@@ -117,10 +140,11 @@ function getFutureWeather(dailyWeather) {
     var dHumidity = dailyWeather[i].humidity;
     var dWindSpeed = dailyWeather[i].wind_speed;
     var dUvi = dailyWeather[i].uvi;
+    var dWeatherIconDesc = dailyWeather[i].weather[0].description;
     var dWeatherIconId = dailyWeather[i].weather[0].icon;
     var dWeatherIcon = getURL(undefined, undefined, undefined, dWeatherIconId);
 
-    futureData.push({ dDate, dWeatherIcon, dTempL, dTempH, dHumidity, dUvi, dWindSpeed });
+    futureData.push({ dDate, dWeatherIcon, dWeatherIconDesc, dTempL, dTempH, dHumidity, dUvi, dWindSpeed });
   };
 
   return futureData;
@@ -158,7 +182,7 @@ function populateFutureCards(dailyWeather) {
     var resultsIconImg = document.createElement("img");
     resultsIconImg.setAttribute("id", "futureWeatherIcon");
     resultsIconImg.setAttribute("src", `${dailyWeather[i].dWeatherIcon}`);
-    resultsIconImg.setAttribute("alt", "Icon that matches weather condition");
+    resultsIconImg.setAttribute("alt", `${dailyWeather[i].dWeatherIconDesc}`);
     resultsCard.appendChild(resultsIconImg);
 
     var resultsTemp = document.createElement("p");
