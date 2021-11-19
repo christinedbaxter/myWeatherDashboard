@@ -97,35 +97,35 @@ function populateCurrCard(city, currData) {
   var currDayTitle = document.createElement("h4");
   currDayTitle.setAttribute("id", "cardTitle");
   currDayTitle.setAttribute("class", "cardTitle");
-  currDayTitle.textContent = city + " (" + currData[0].cDate + ")";
+  currDayTitle.innerHTML = `
+    ${city} ${currData[0].cDate} 
+    <span>
+      <img id="currWeatherIcon" src="${currData[0].cWeatherIcon}" alt="${currData[0].cWeatherIconDesc}"</img>
+    </span>
+   `;
   currDay.appendChild(currDayTitle);
-
-  var currDayWeatherIcon = document.createElement("img");
-  currDayWeatherIcon.setAttribute("id", "currWeatherIcon");
-  currDayWeatherIcon.setAttribute("src", `${currData[0].cWeatherIcon}`);
-  currDayWeatherIcon.setAttribute("alt", `${currData[0].cWeatherIconDesc}`);
-  currDay.appendChild(currDayWeatherIcon);
 
   var currDayTemp = document.createElement("p");
   currDayTemp.setAttribute("id", "currTemp");
-  currDayTemp.textContent = "Temp: " + currData[0].cTemp + `°F`;
+  currDayTemp.textContent = "Temp: " + currData[0].cTemp + "°F";
   currDay.appendChild(currDayTemp);
 
   var currDayHumidity = document.createElement("p");
   currDayHumidity.setAttribute("id", "currHumidity");
-  currDayHumidity.textContent = "Humidity: " + currData[0].cHumidity + ` %`;
+  currDayHumidity.textContent = "Humidity: " + currData[0].cHumidity + `% `;
   currDay.appendChild(currDayHumidity);
-
-  var currDayUvi = document.createElement("p");
-  currDayUvi.setAttribute("id", "currUvi");
-  currDayUvi.setAttribute("style", `background-color: ${currData[0].cUviColor}`);
-  currDayUvi.textContent = "UV Index: " + currData[0].cUvi;
-  currDay.appendChild(currDayUvi);
 
   var currDayWindSpeed = document.createElement("p");
   currDayWindSpeed.setAttribute("id", "currWindSpeed");
   currDayWindSpeed.textContent = "Wind: " + currData[0].cWindSpeed + " MPH";
   currDay.appendChild(currDayWindSpeed);
+
+  var currDayUvi = document.createElement("p");
+  currDayUvi.setAttribute("id", "currUvi");
+  currDayUvi.innerHTML = `UV Index:
+  <span style="background-color: ${currData[0].cUviColor}">${currData[0].cUvi}</span>
+  `;
+  currDay.appendChild(currDayUvi);
 }
 
 function getFutureWeather(dailyWeather) {
@@ -180,8 +180,8 @@ function populateFutureCards(dailyWeather) {
 
     var resultsIconImg = document.createElement("img");
     resultsIconImg.setAttribute("id", "futureWeatherIcon");
-    resultsIconImg.setAttribute("src", `${dailyWeather[i].dWeatherIcon}`);
-    resultsIconImg.setAttribute("alt", `${dailyWeather[i].dWeatherIconDesc}`);
+    resultsIconImg.setAttribute("src", `${dailyWeather[i].dWeatherIcon} `);
+    resultsIconImg.setAttribute("alt", `${dailyWeather[i].dWeatherIconDesc} `);
     resultsCard.appendChild(resultsIconImg);
 
     var resultsTemp = document.createElement("p");
@@ -192,7 +192,7 @@ function populateFutureCards(dailyWeather) {
 
     var resultsHumidity = document.createElement("p");
     resultsHumidity.setAttribute("id", "humidity");
-    resultsHumidity.textContent = "Humidity: " + dailyWeather[i].dHumidity + ` %`;
+    resultsHumidity.textContent = "Humidity: " + dailyWeather[i].dHumidity + `% `;
     resultsCard.appendChild(resultsHumidity);
 
     var resultsWind = document.createElement("p");

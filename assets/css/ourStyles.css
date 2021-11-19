@@ -6,15 +6,17 @@
 	margin: 0;
 }
 
-aside .container {
-	background-image: url(../images/seasonalStreetSign.jpeg);
-	background-size: cover;
-	background-repeat: no-repeat;
-}
-
 figure {
 	border: 0.5px whitesmoke solid;
 	border-radius: 15px;
+}
+
+figure img {
+	width: 50px;
+}
+
+figure p {
+	color: whitesmoke;
 }
 
 button {
@@ -25,12 +27,18 @@ button {
 	padding-top: 10px;
 }
 
+h4 {
+	color: whitesmoke;
+	background-color: rgba(0, 0, 0, 0.87);
+}
+
 h5 {
 	margin-top: 0px;
 }
 
 nav {
 	text-align: center;
+	background-color: midnightblue;
 }
 
 nav .brand-logo {
@@ -45,14 +53,20 @@ nav .brand-logo {
 	margin-bottom: 2px;
 }
 
+#searchResultsContent {
+	background-image: url(../images/weatherStationBg.jpeg);
+	border-radius: 0.5;
+	background-size: contain;
+	background-repeat: no-repeat;
+	height: 50vh;
+	background-position-y: 1.5vh;
+	background-position-x: -8vh;
+}
+
 .card-content .white-text {
 	padding: 20px;
 }
 
 .cardTitle {
 	margin-bottom: 2px;
-}
-
-.cardTitle #currWeatherIcon {
-	background-size: 50% 50%;
 }

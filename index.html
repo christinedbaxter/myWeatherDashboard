@@ -16,6 +16,7 @@
 		<link type="text/css" rel="stylesheet" href="./assets/css/ourStyles.css" />
 		<!--Let browser know website is optimized for mobile-->
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 		<!--Title for browser tab-->
 		<title>Weather Dashboard</title>
 	</head>
@@ -29,35 +30,34 @@
 			</nav>
 		</header>
 		<main class="row">
-			<div class="asideContainer">
-				<aside class="col s3">
-					<form id="searchResultsForm" name="searchResultsForm" class="col s12">
-						<div class="row">
-							<div class="input-field col s12">
-								<label for="input-city">
-									<h5>Search for a City:</h5>
-								</label>
-								<input
-									type="text"
-									id="input-city"
-									name="q"
-									aria-label="Search city and get coordinates"
-								/>
-							</div>
-							<button
-								type="button"
-								id="get-location"
-								class="btn waves-effect waves-medium"
-								onclick="searchBtn()"
-							>
-								Search
-								<i class="material-icons right">search</i>
-							</button>
+			<aside id="asideContent" class="col s3">
+				<form id="searchResultsForm" name="searchResultsForm" class="col s12">
+					<div class="row">
+						<div class="input-field col s12">
+							<label for="input-city">
+								<h5>Search for a City:</h5>
+							</label>
+							<input
+								type="text"
+								id="input-city"
+								name="q"
+								aria-label="Search city and get coordinates"
+							/>
 						</div>
-					</form>
-					<ul id="localStorage" class="collection"></ul>
-				</aside>
-			</div>
+						<button
+							type="button"
+							id="get-location"
+							class="btn waves-effect waves-medium"
+							onclick="searchBtn()"
+						>
+							Search
+							<i class="material-icons right">search</i>
+						</button>
+					</div>
+				</form>
+				<ul id="localStorage" class="collection"></ul>
+			</aside>
+
 			<content id="searchResultsContent" class="container col s9">
 				<section id="currDayResults" class="row">
 					<figure id="currDayData" class="col m12"></figure>
