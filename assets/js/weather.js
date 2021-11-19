@@ -57,9 +57,9 @@ function getCurrWeather(data) {
   var longDate = currWeather.dt;
   var d = new Date(longDate * 1000);
   var cDate = d.toDateString(longDate);
-  var cTemp = currWeather.temp;
+  var cTemp = Math.round(currWeather.temp);
   var cHumidity = currWeather.humidity;
-  var cUvi = currWeather.uvi;
+  var cUvi = Number.parseFloat(currWeather.uvi).toFixed(2);
   var cUviColor = getUviColor(cUvi);
   var cWindSpeed = currWeather.wind_speed;
   var cWeatherIconDesc = currWeather.weather[0].description;
@@ -73,7 +73,6 @@ function getCurrWeather(data) {
 }
 
 function getUviColor(uvi) {
-  console.log(uvi);
   var uviNum = uvi, color = "";
 
   //Select correct UV background color based on Index value
@@ -109,7 +108,7 @@ function populateCurrCard(city, currData) {
 
   var currDayTemp = document.createElement("p");
   currDayTemp.setAttribute("id", "currTemp");
-  currDayTemp.textContent = "Temp: " + currData[0].cTemp;
+  currDayTemp.textContent = "Temp: " + currData[0].cTemp + `°F`;
   currDay.appendChild(currDayTemp);
 
   var currDayHumidity = document.createElement("p");
@@ -135,8 +134,8 @@ function getFutureWeather(dailyWeather) {
     var longDate = dailyWeather[i].dt;
     var d = new Date(longDate * 1000);
     var dDate = d.toDateString(longDate);
-    var dTempL = dailyWeather[i].temp.min;
-    var dTempH = dailyWeather[i].temp.max;
+    var dTempL = Math.round(dailyWeather[i].temp.min);
+    var dTempH = Math.round(dailyWeather[i].temp.max);
     var dHumidity = dailyWeather[i].humidity;
     var dWindSpeed = dailyWeather[i].wind_speed;
     var dUvi = dailyWeather[i].uvi;
@@ -188,7 +187,7 @@ function populateFutureCards(dailyWeather) {
     var resultsTemp = document.createElement("p");
     resultsTemp.setAttribute("id", "temp");
     resultsTemp.textContent = "Temp: (L) " +
-      dailyWeather[i].dTempL + " / (H) " + dailyWeather[i].dTempH;
+      dailyWeather[i].dTempL + `°F` + " / (H) " + dailyWeather[i].dTempH + `°F`;
     resultsCard.appendChild(resultsTemp);
 
     var resultsHumidity = document.createElement("p");

@@ -9,7 +9,7 @@ var cityId = "", cityLat = "", cityLon = "";
 var j = 0;
 
 function searchBtn() {
-  var CITY = cityNameEl.value;
+  var CITY = cityNameEl.value.trim();
   var currDayDataEl = document.querySelector("figure");
   var futureDayResultsEl = document.getElementById("futureDayResults");
   formEl.reset();
@@ -54,7 +54,6 @@ function populateSearchedCities() {
   var lat = cities[j].cityLat;
   var lon = cities[j].cityLon;
   var savedCityLink = getURL(CITY, lat, lon);
-
   var searchedCityEl = document.getElementById("localStorage");
   var searchedCollectionItem = document.createElement("li");
 
