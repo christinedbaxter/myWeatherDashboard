@@ -177,10 +177,6 @@ function populateFutureCards(dailyWeather) {
     resultsCardData.setAttribute("class", "card small blue-grey darken-1 col s12 m3 l2.5");
     futureDay.appendChild(resultsCardData);
 
-    // var resultsCardImg = document.createElement("div");
-    // resultsCardImg.setAttribute("class", "card-image");
-    // resultsCardData.appendChild(resultsCardImg);
-
     var resultsIconImg = document.createElement("img");
     resultsIconImg.setAttribute("id", "futureWeatherIcon");
     resultsIconImg.setAttribute("src", `${dailyWeather[i].dWeatherIcon}`);

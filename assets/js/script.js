@@ -32,7 +32,9 @@ function getLatLon(CITY) {
 
   fetch(requestUrl)
     .then(function (res) {
-      return res.json();
+      if (res.ok) {
+        return res.json();
+      }
     })
     .then(function (data) {
       cityId = CITY;
@@ -63,7 +65,7 @@ function populateSearchedCities() {
 
   searchedCollectionItem.setAttribute("class", "collection-item");
   searchedCollectionItem.setAttribute("id", "savedCity");
-  searchedCollectionItem.setAttribute("href", savedCityLink)
+  searchedCollectionItem.setAttribute("href", savedCityLink);
   searchedCollectionItem.textContent = CITY;
 
   searchedCityEl.appendChild(searchedCollectionItem);
@@ -74,8 +76,9 @@ function populateSearchedCities() {
 // }
 
 document.getElementById("input-city")
-  .addEventListener("keyup", function (event) {
+  .addEventListener("keypress", function (event) {
     if (event.keyCode === 13) {
+      event.preventDefault();
       document.getElementById("get-location").click();
     }
   });
