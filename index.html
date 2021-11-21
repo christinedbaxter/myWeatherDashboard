@@ -30,7 +30,7 @@
 			</nav>
 		</header>
 		<main class="row">
-			<aside id="asideContent" class="col s3">
+			<aside id="asideContent" class="col s12 m4 l3">
 				<form id="searchResultsForm" name="searchResultsForm" class="col s12">
 					<div class="row">
 						<div class="input-field col s12">
@@ -48,23 +48,34 @@
 							type="button"
 							id="get-location"
 							class="btn waves-effect waves-medium"
-							onclick="searchBtn()"
 						>
 							Search
 							<i class="material-icons right">search</i>
 						</button>
 					</div>
 				</form>
-				<ul id="localStorage" class="collection"></ul>
+				<div id="localStorage" class="collection"></div>
 			</aside>
 
-			<content id="searchResultsContent" class="container col s9">
+			<content id="searchResultsContent" class="container col s12 m8 l9">
 				<section id="currDayResults" class="row">
-					<figure id="currDayData" class="col m12"></figure>
+					<div id="currDayTitle" class="col s12">
+						<h4>Today's Forecast</h4>
+						<p id="starterTextCurr">
+							Enter a city, click search to see today's forecast.
+						</p>
+					</div>
+					<div id="currDayData" class="col s12"></div>
 				</section>
-				<div id="futureDayResults" class="row">
-					<h4>5-Day Forecast</h4>
-				</div>
+				<section id="futureDayResults" class="row">
+					<div id="futureDayTitle" class="col s12">
+						<h4>5-Day Forecast</h4>
+						<p id="starterTextFuture">
+							Enter a city, click search to see forecast for the next 5 days.
+						</p>
+					</div>
+					<div id="futureDayData" class="col s12"></div>
+				</section>
 			</content>
 		</main>
 

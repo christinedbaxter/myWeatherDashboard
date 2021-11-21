@@ -94,37 +94,56 @@ function getUviColor(uvi) {
 function populateCurrCard(city, currData) {
   var currDay = document.getElementById("currDayData");
 
-  var currDayTitle = document.createElement("h4");
-  currDayTitle.setAttribute("id", "cardTitle");
-  currDayTitle.setAttribute("class", "cardTitle");
-  currDayTitle.innerHTML = `${city} (${currData[0].cDate}) 
-    <span>
-      <img id="currWeatherIcon" src="${currData[0].cWeatherIcon}" alt="${currData[0].cWeatherIconDesc}"</img>
-    </span>
-   `;
-  currDay.appendChild(currDayTitle);
+  var resultsCardCurrData = document.createElement("div");
+  resultsCardCurrData.setAttribute("id", "futureCard");
+  resultsCardCurrData.setAttribute("class", "card small blue-grey darken-1 col s12");
+  currDay.appendChild(resultsCardCurrData);
+
+  var resultsCardCurrImg = document.createElement("div");
+  resultsCardCurrImg.setAttribute("class", "card-image valign-wrapper");
+  resultsCardCurrData.appendChild(resultsCardCurrImg);
+
+  var resultsCurrIconImg = document.createElement("img");
+  resultsCurrIconImg.setAttribute("id", "currWeatherIcon");
+  resultsCurrIconImg.setAttribute("src", `${currData[0].cWeatherIcon}`);
+  resultsCurrIconImg.setAttribute("alt", `${currData[0].cWeatherIconDesc}`);
+  resultsCardCurrImg.appendChild(resultsCurrIconImg);
+
+  var resultsCurrIconTitle = document.createElement("span");
+  resultsCurrIconTitle.setAttribute("id", "currCardTitle");
+  resultsCurrIconTitle.setAttribute("class", "card-title black-text left-align");
+  resultsCurrIconTitle.textContent = city + ", " + currData[0].cDate;
+  resultsCardCurrImg.appendChild(resultsCurrIconTitle);
+
+  var resultsCurrCardContent = document.createElement("div");
+  resultsCurrCardContent.setAttribute("class", "card-content white-text left-align");
+  resultsCardCurrData.appendChild(resultsCurrCardContent);
 
   var currDayTemp = document.createElement("p");
   currDayTemp.setAttribute("id", "currTemp");
+  currDayTemp.setAttribute("class", "currDayData left-align");
   currDayTemp.textContent = "Temp: " + currData[0].cTemp + "°F";
-  currDay.appendChild(currDayTemp);
+  resultsCurrCardContent.appendChild(currDayTemp);
 
   var currDayHumidity = document.createElement("p");
   currDayHumidity.setAttribute("id", "currHumidity");
+  currDayHumidity.setAttribute("class", "currDayData left-align");
   currDayHumidity.textContent = "Humidity: " + currData[0].cHumidity + `% `;
-  currDay.appendChild(currDayHumidity);
+  resultsCurrCardContent.appendChild(currDayHumidity);
 
   var currDayWindSpeed = document.createElement("p");
   currDayWindSpeed.setAttribute("id", "currWindSpeed");
+  currDayWindSpeed.setAttribute("class", "currDayData left-align");
   currDayWindSpeed.textContent = "Wind: " + currData[0].cWindSpeed + " MPH";
-  currDay.appendChild(currDayWindSpeed);
+  resultsCurrCardContent.appendChild(currDayWindSpeed);
 
   var currDayUvi = document.createElement("p");
   currDayUvi.setAttribute("id", "currUvi");
+  currDayUvi.setAttribute("class", "currDayData left-align");
   currDayUvi.innerHTML = `UV Index:
   <span style="background-color: ${currData[0].cUviColor}">${currData[0].cUvi}</span>
   `;
-  currDay.appendChild(currDayUvi);
+  resultsCurrCardContent.appendChild(currDayUvi);
 }
 
 function getFutureWeather(dailyWeather) {
@@ -149,54 +168,49 @@ function getFutureWeather(dailyWeather) {
 }
 
 function populateFutureCards(dailyWeather) {
-  var results = document.getElementById("futureDayResults");
-
-  var resultsDiv = document.createElement("div");
-  resultsDiv.setAttribute("id", "futureDayData");
-  resultsDiv.setAttribute("class", "col s6 m4");
-  results.appendChild(resultsDiv);
+  var futureDay = document.getElementById("futureDayData");
 
   for (var i = 0; i < dailyWeather.length; i++) {
 
     var resultsCardData = document.createElement("div");
-    resultsCardData.setAttribute("id", "card-data");
-    resultsCardData.setAttribute("class", "card blue-grey darken-1");
-    resultsDiv.appendChild(resultsCardData);
+    resultsCardData.setAttribute("id", "futureCard");
+    resultsCardData.setAttribute("class", "card small blue-grey darken-1 col s12 m3 l2.5");
+    futureDay.appendChild(resultsCardData);
 
-    var resultsCard = document.createElement("div");
-    resultsCard.setAttribute("class", "card-content white-text");
-    resultsCardData.appendChild(resultsCard);
-
-    var resultsTitle = document.createElement("p");
-    resultsTitle.setAttribute("id", "cardTitle");
-    resultsTitle.setAttribute("class", "cardTitle");
-    resultsTitle.textContent = dailyWeather[i].dDate;
-    resultsCard.appendChild(resultsTitle);
-
-    var resultsIcon = document.createElement("p");
-    resultsIcon.setAttribute("class", "divider")
-    resultsCard.appendChild(resultsIcon);
+    // var resultsCardImg = document.createElement("div");
+    // resultsCardImg.setAttribute("class", "card-image");
+    // resultsCardData.appendChild(resultsCardImg);
 
     var resultsIconImg = document.createElement("img");
     resultsIconImg.setAttribute("id", "futureWeatherIcon");
-    resultsIconImg.setAttribute("src", `${dailyWeather[i].dWeatherIcon} `);
-    resultsIconImg.setAttribute("alt", `${dailyWeather[i].dWeatherIconDesc} `);
-    resultsCard.appendChild(resultsIconImg);
+    resultsIconImg.setAttribute("src", `${dailyWeather[i].dWeatherIcon}`);
+    resultsIconImg.setAttribute("alt", `${dailyWeather[i].dWeatherIconDesc}`);
+    resultsCardData.appendChild(resultsIconImg);
+
+    var resultsIconTitle = document.createElement("p");
+    resultsIconTitle.setAttribute("id", "futureCardTitle");
+    resultsIconTitle.setAttribute("class", "card-title black-text");
+    resultsIconTitle.textContent = dailyWeather[i].dDate;
+    resultsCardData.appendChild(resultsIconTitle);
+
+    var resultsCardContent = document.createElement("div");
+    resultsCardContent.setAttribute("class", "card-content white-text");
+    resultsCardData.appendChild(resultsCardContent);
 
     var resultsTemp = document.createElement("p");
     resultsTemp.setAttribute("id", "temp");
-    resultsTemp.textContent = "Temp: (L) " +
-      dailyWeather[i].dTempL + `°F` + " / (H) " + dailyWeather[i].dTempH + `°F`;
-    resultsCard.appendChild(resultsTemp);
+    resultsTemp.textContent = "Temp: (L)" +
+      dailyWeather[i].dTempL + `°F` + " / (H)" + dailyWeather[i].dTempH + `°F`;
+    resultsCardContent.appendChild(resultsTemp);
 
     var resultsHumidity = document.createElement("p");
     resultsHumidity.setAttribute("id", "humidity");
     resultsHumidity.textContent = "Humidity: " + dailyWeather[i].dHumidity + `% `;
-    resultsCard.appendChild(resultsHumidity);
+    resultsCardContent.appendChild(resultsHumidity);
 
     var resultsWind = document.createElement("p");
     resultsWind.setAttribute("id", "wind");
     resultsWind.textContent = "Wind: " + dailyWeather[i].dWindSpeed + " MPH";
-    resultsCard.appendChild(resultsWind);
+    resultsCardContent.appendChild(resultsWind);
   };
 };

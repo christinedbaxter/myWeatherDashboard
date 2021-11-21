@@ -10,15 +10,19 @@ var j = 0;
 
 function searchBtn() {
   var CITY = cityNameEl.value.trim();
-  var currDayDataEl = document.querySelector("figure");
-  var futureDayResultsEl = document.getElementById("futureDayResults");
+  var currDayDataEl = document.getElementById("currDayData");
+  var futureDayDataEl = document.getElementById("futureDayData");
+  var starterTextCurrEl = document.getElementById("starterTextCurr");
+  var starterTextFutureEl = document.getElementById("starterTextFuture")
   formEl.reset();
 
-  if (currDayDataEl.childElementCount === 0) {
+  if (currDayDataEl.hasChildNodes()) {
+    currDayDataEl.replaceChildren();
+    futureDayDataEl.replaceChildren();
     getLatLon(CITY);
   } else {
-    currDayDataEl.replaceChildren();
-    futureDayResultsEl.replaceChildren();
+    starterTextCurrEl.remove();
+    starterTextFutureEl.remove();
     getLatLon(CITY);
   }
 };
@@ -55,16 +59,27 @@ function populateSearchedCities() {
   var lon = cities[j].cityLon;
   var savedCityLink = getURL(CITY, lat, lon);
   var searchedCityEl = document.getElementById("localStorage");
-  var searchedCollectionItem = document.createElement("li");
+  var searchedCollectionItem = document.createElement("a");
 
   searchedCollectionItem.setAttribute("class", "collection-item");
   searchedCollectionItem.setAttribute("id", "savedCity");
+  searchedCollectionItem.setAttribute("href", savedCityLink)
   searchedCollectionItem.textContent = CITY;
 
-  searchedCollectionItem.innerHTML = `<a href=${savedCityLink}>${CITY}</a>`;
   searchedCityEl.appendChild(searchedCollectionItem);
 };
 
-function linkToSavedCity(CITY, j) {
-  getWeather(cities, j);
+// function linkToSavedCity(CITY, j) {
+//   getWeather(cities, j);
+// }
+
+document.getElementById("input-city")
+  .addEventListener("keyup", function (event) {
+    if (event.keyCode === 13) {
+      document.getElementById("get-location").click();
+    }
+  });
+
+document.getElementById("get-location").onclick = function () {
+  searchBtn();
 }
