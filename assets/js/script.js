@@ -15,6 +15,8 @@ function clearWeatherData() {
   let futureDayDataEl = document.getElementById("futureDayData");
   let starterTextCurrEl = document.getElementById("starterTextCurr");
   let starterTextFutureEl = document.getElementById("starterTextFuture")
+  let formEl = document.querySelector("form");
+  formEl.reset();
 
   if (!currDayDataEl.hasChildNodes()) {
     starterTextCurrEl.remove();
@@ -49,6 +51,7 @@ function getGeoCoordinates(city) {
 };
 
 function getWeatherData(cityData) {
+  let city = cityData.cityId;
   let lat = cityData.lat;
   let lon = cityData.lon;
   let weatherAppId = "a77eee0f49abe8e6331cd9b225df2834";
