@@ -1,40 +1,111 @@
-figure {
-background-color: yellow;
-height: 250px;
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500&display=swap");
+
+:root {
+	font-family: "Poppins", sans-serif;
+	padding: 0;
+	margin: 0;
 }
 
 button {
-    width: 100%;
+	width: 100%;
 }
 
-#city_name {    
-    padding-top: 10px;
+#city_name {
+	padding-top: 10px;
+}
+
+h4 {
+	color: whitesmoke;
+	background-color: rgba(0, 0, 0, 0.87);
+	vertical-align: middle;
+	padding: 0.25em;
 }
 
 h5 {
-    margin-top: 0px;
+	margin-top: 0px;
+	font-size: larger;
 }
 
 nav {
-    text-align: center;
+	text-align: center;
+	background-color: midnightblue;
 }
 
 nav .brand-logo {
-    position: relative;
+	position: relative;
 }
 
 .divider {
-    margin: 0;
-    margin-top: 2px;
-    padding-top: 2px;
-    padding-bottom: 2px;
-    margin-bottom: 2px;
+	margin: 0;
+	margin-top: 2px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	margin-bottom: 2px;
+}
+
+/* #searchResultsContent {
+	background-image: url(../images/weatherStationBg.jpeg);
+	background-size: contain;
+	background-repeat: no-repeat;
+	height: auto;
+	background-position-y: 0.5vh;
+	background-position-x: -8vh;
+} */
+
+.card.small {
+	text-align: center;
+	align-items: center;
 }
 
 .card-content .white-text {
-    padding: 20px;
+	/* padding: 11.25px; */
+	font-size: xx-large;
 }
 
-#card-title {
-    margin-bottom: 2px;
+.card .card-image .card-title {
+	margin: auto;
+	position: relative;
+	padding: 3px;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.card .card-content {
+	padding: 5px;
+	border-radius: 0 0 2px 2px;
+}
+
+.card .card-content p {
+	margin: 0;
+}
+
+.card .card-content .card-title {
+	display: block;
+	line-height: 6pt;
+}
+
+#futureWeatherIcon {
+	width: 100px;
+	height: 100px;
+	vertical-align: top;
+	text-align: center;
+}
+
+#currWeatherIcon {
+	width: 150px;
+	height: 150px;
+	vertical-align: top;
+}
+
+#currCardTitle {
+	padding: 0px;
+	margin: 0px;
+	font-size: 28px;
+}
+
+#futureCardTitle {
+	padding: 0px;
+	font-size: 18px;
+	font-weight: bold;
+	margin: 0px;
 }
