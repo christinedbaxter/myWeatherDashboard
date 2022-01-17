@@ -1,14 +1,21 @@
 const cityNameEl = document.querySelector("input");
 
 function searchBtn() {
+  let cityInfo = {}, data = [];
   let city = cityNameEl.value.trim();
   clearWeatherData();
-  let cityData = getGeoCoordinates(city);
-  let data = getWeatherData(cityData);
-  getCurrentWeather(data, city);
-  getFutureWeather(data, city);
+  cityInfo = getGeoCoordinates(city);
+  getCityLatLon(cityInfo);
   addCityToHistory(city);
 };
+
+function searchedCityBtn(city) {
+  let cityInfo = {}, data = [];
+  clearWeatherData();
+  cityInfo = getGeoCoordinates(city);
+  getCityLatLon(cityInfo);
+  addCityToHistory(city);
+}
 
 function clearWeatherData() {
   let currDayDataEl = document.getElementById("currDayData");
@@ -32,28 +39,31 @@ function getGeoCoordinates(city) {
   let geoCoordUrl =
     `https://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=${weatherAppId}`;
 
-  fetch(geoCoordUrl)
-    .then(function (res) {
-      return res.json();
-    })
-    .then(function (data) {
-      let cities = [], cityData = {};
-      let cityId = city;
-      let cityLat = data[0].lat;
-      let cityLon = data[0].lon;
-      cityData = { cityId, cityLat, cityLon };
-      cities.push(cityData);
-
-      addToLocalStorage(cities);
-
+  return fetch(geoCoordUrl)
+    .then((response) => response.json())
+    .then((data) => {
+      let cityData = {
+        cityId: city,
+        cityLat: data[0].lat,
+        cityLon: data[0].lon
+      }
       return cityData;
-    })
-};
+    });
+}
+
+function getCityLatLon(cityData) {
+  cityData.then((cityInfo) => {
+    console.log(cityInfo);
+    data = getWeatherData(cityInfo);
+    return data;
+  });
+}
 
 function getWeatherData(cityData) {
   let city = cityData.cityId;
-  let lat = cityData.lat;
-  let lon = cityData.lon;
+  let lat = cityData.cityLat;
+  let lon = cityData.cityLon;
+  console.log(lat, lon);
   let weatherAppId = "a77eee0f49abe8e6331cd9b225df2834";
   let weatherUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly,alerts&units=imperial&appid=${weatherAppId}`;
 
@@ -63,7 +73,13 @@ function getWeatherData(cityData) {
     })
     .then(function (data) {
       return (data);
-    });
+    })
+    .then(function (data) {
+      console.log(data);
+      getCurrentWeather(data, city);
+      getFutureWeather(data, city);
+      return;
+    })
 };
 
 function getUviColor(uvi) {
@@ -90,46 +106,47 @@ function getCurrentWeather(data, city) {
   let cityId = city;
   let cityLat = data.lat;
   let cityLon = data.lon;
-  let longDate = data.daily.dt;
+  let longDate = data.current.dt;
   let d = new Date(longDate * 1000);
   let cDate = d.toDateString(longDate);
-  let cTemp = current.temp;
-  let cHumidity = current.humidity;
-  let cUvi = Number.parseFloat(current.uvi).toFixed(2);
+  let cTemp = Number.parseInt(data.current.temp);
+  let cHumidity = data.current.humidity;
+  let cUvi = Number.parseFloat(data.current.uvi).toFixed(2);
   let cUviColor = getUviColor(cUvi);
-  let cWindSpeed = current.wind_speed;
-  let cWeatherDesc = current.weather.description;
-  let cWeatherIconId = getWeatherIcon(current.weather.icon);
+  let cWindSpeed = Number.parseInt(data.current.wind_speed);
+  let cWeatherDesc = data.current.weather[0].description;
+  let cWeatherIconId = getWeatherIcon(data.current.weather[0].icon);
   let cTimeZone = data.timezone;
-  let cData = [];
 
-  cData.push({ cityId, cityLat, cityLon, cDate, cTemp, cHumidity, cUvi, cUviColor, cWindSpeed, cWeatherDesc, cWeatherIconId, cTimeZone });
+  let cData = { cityId, cityLat, cityLon, cDate, cTemp, cHumidity, cUvi, cUviColor, cWindSpeed, cWeatherDesc, cWeatherIconId, cTimeZone };
 
   populateCurrCard(cData);
+  addToLocalStorage(cData);
 };
 
 function getFutureWeather(data, city) {
   let cityId = city;
   let cityLat = data.lat;
-  let cityLon = data.log;
+  let cityLon = data.lon;
   let dTimeZone = data.timezone;
   let dailyWeather = data.daily;
-  let fData = [];
 
   for (let i = 1; i < 6; i++) {
     let longDate = dailyWeather[i].dt;
     let d = new Date(longDate * 1000);
     let dDate = d.toDateString(longDate);
-    let dTempL = dailyWeather[i].temp.min;
-    let dTempH = dailyWeather[i].temp.max;
+    let dTempL = Number.parseInt(dailyWeather[i].temp.min);
+    let dTempH = Number.parseInt(dailyWeather[i].temp.max);
     let dHumidity = dailyWeather[i].humidity;
     let dUvi = dailyWeather[i].uvi;
     let dUviColor = getUviColor(dUvi);
-    let dWindSpeed = dailyWeather[i].wind_speed;
-    let dWeatherDesc = dailyWeather[i].description;
-    let dWeatherIconId = getWeatherIcon(dailyWeather[i].icon);
+    let dWindSpeed = Number.parseInt(dailyWeather[i].wind_speed);
+    let dWeatherDesc = dailyWeather[i].weather[0].description;
+    let dWeatherIconId = getWeatherIcon(dailyWeather[i].weather[0].icon);
 
-    fData.push({ cityId, cityLat, cityLon, dTimeZone, dDate, dTempL, dTempH, dHumidity, dUvi, dUviColor, dWindSpeed, dWeatherDesc, dWeatherIconId });
+    let fData = { cityId, cityLat, cityLon, dTimeZone, dDate, dTempL, dTempH, dHumidity, dUvi, dUviColor, dWindSpeed, dWeatherDesc, dWeatherIconId };
+
+    console.log(fData);
 
     populateFutureCards(fData);
   }
@@ -161,7 +178,7 @@ function populateCurrCard(cData) {
   let resultsCurrIconTitle = document.createElement("span");
   resultsCurrIconTitle.setAttribute("id", "currCardTitle");
   resultsCurrIconTitle.setAttribute("class", "card-title black-text left-align");
-  resultsCurrIconTitle.textContent = cData.city + ", " + cData.cDate;
+  resultsCurrIconTitle.textContent = cData.cityId + ", " + cData.cDate;
   resultsCardCurrImg.appendChild(resultsCurrIconTitle);
 
   let resultsCurrCardContent = document.createElement("div");
@@ -203,26 +220,30 @@ function populateFutureCards(fData) {
   resultsCardData.setAttribute("class", "card small blue-grey darken-1 col s12 m3 l2.5");
   futureDay.appendChild(resultsCardData);
 
+  let resultsCardImg = document.createElement("div");
+  resultsCardImg.setAttribute("class", "card-image valign-wrapper");
+  resultsCardData.appendChild(resultsCardImg);
+
   let resultsIconImg = document.createElement("img");
   resultsIconImg.setAttribute("id", "futureWeatherIcon");
-  resultsIconImg.setAttribute("src", `${fData.dWeatherIcon}`);
+  resultsIconImg.setAttribute("src", `${fData.dWeatherIconId}`);
   resultsIconImg.setAttribute("alt", `${fData.dWeatherIconDesc}`);
-  resultsCardData.appendChild(resultsIconImg);
+  resultsCardImg.appendChild(resultsIconImg);
 
-  let resultsIconTitle = document.createElement("p");
+  let resultsIconTitle = document.createElement("span");
   resultsIconTitle.setAttribute("id", "futureCardTitle");
-  resultsIconTitle.setAttribute("class", "card-title black-text");
+  resultsIconTitle.setAttribute("class", "card-title black-text left-align");
   resultsIconTitle.textContent = fData.dDate;
-  resultsCardData.appendChild(resultsIconTitle);
+  resultsCardImg.appendChild(resultsIconTitle);
 
   let resultsCardContent = document.createElement("div");
-  resultsCardContent.setAttribute("class", "card-content white-text");
+  resultsCardContent.setAttribute("class", "card-content white-text left-align");
   resultsCardData.appendChild(resultsCardContent);
 
   let resultsTemp = document.createElement("p");
   resultsTemp.setAttribute("id", "temp");
-  resultsTemp.textContent = "Temp: (L)" +
-    fData.dTempL + "°F" + " / (H)" + fData.dTempH + "°F";
+  resultsTemp.textContent = "Temp: (L) " +
+    fData.dTempL + "°F" + " / (H) " + fData.dTempH + "°F";
   resultsCardContent.appendChild(resultsTemp);
 
   let resultsHumidity = document.createElement("p");
@@ -239,25 +260,41 @@ function populateFutureCards(fData) {
   resultsUvi.setAttribute("id", "futureUvi");
   resultsUvi.setAttribute("class", "futureDayData left-align");
   resultsUvi.innerHTML = `UV Index:
-  <span style="background-color: ${fData.cUviColor}">${fData.cUvi}</span>
+  <span style="background-color: ${fData.dUviColor}">${fData.dUvi}</span>
   `;
-  resultsCurrCardContent.appendChild(resultsUvi);
+  resultsCardContent.appendChild(resultsUvi);
 };
 
 function addCityToHistory(city) {
 
   let searchedCityEl = document.getElementById("localStorage");
-  let searchedCollectionItem = document.createElement("li");
-  searchedCollectionItem.setAttribute("class", "collection-item");
+  let searchedCollectionItem = document.createElement("button");
+  searchedCollectionItem.setAttribute("type", "button");
   searchedCollectionItem.setAttribute("id", "savedCity");
+  searchedCollectionItem.setAttribute("class", "collection-item");
   searchedCollectionItem.textContent = city;
+  searchedCollectionItem.setAttribute("onclick", `searchedCityBtn(${city})`);
   searchedCityEl.appendChild(searchedCollectionItem);
 };
 
 function addToLocalStorage(cities) {
-  localStorage.setItem("cities", JSON.stringify(cities));
+
+  if (!JSON.parse(localStorage.getItem("data"))) {
+    localStorage.setItem("data", JSON.stringify([cities]));
+  } else {
+    let arrLocalStorage = JSON.parse(localStorage.getItem("data"));
+    arrLocalStorage.push(cities);
+    localStorage.setItem("data", JSON.stringify(arrLocalStorage));
+  }
+
 }
+
+
 
 document.getElementById("get-location").onclick = function () {
   searchBtn();
 };
+
+// document.getElementById("savedCity").onclick = function () {
+//   searchedCityBtn();
+// };
