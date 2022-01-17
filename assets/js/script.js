@@ -53,7 +53,6 @@ function getGeoCoordinates(city) {
 
 function getCityLatLon(cityData) {
   cityData.then((cityInfo) => {
-    console.log(cityInfo);
     data = getWeatherData(cityInfo);
     return data;
   });
@@ -63,7 +62,6 @@ function getWeatherData(cityData) {
   let city = cityData.cityId;
   let lat = cityData.cityLat;
   let lon = cityData.cityLon;
-  console.log(lat, lon);
   let weatherAppId = "a77eee0f49abe8e6331cd9b225df2834";
   let weatherUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly,alerts&units=imperial&appid=${weatherAppId}`;
 
@@ -75,7 +73,6 @@ function getWeatherData(cityData) {
       return (data);
     })
     .then(function (data) {
-      console.log(data);
       getCurrentWeather(data, city);
       getFutureWeather(data, city);
       return;
@@ -145,8 +142,6 @@ function getFutureWeather(data, city) {
     let dWeatherIconId = getWeatherIcon(dailyWeather[i].weather[0].icon);
 
     let fData = { cityId, cityLat, cityLon, dTimeZone, dDate, dTempL, dTempH, dHumidity, dUvi, dUviColor, dWindSpeed, dWeatherDesc, dWeatherIconId };
-
-    console.log(fData);
 
     populateFutureCards(fData);
   }
