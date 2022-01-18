@@ -1,21 +1,22 @@
 const cityNameEl = document.querySelector("input");
 
 function searchBtn() {
-  let cityInfo = {}, data = [];
+  let cityInfo = {}, data = {};
   let city = cityNameEl.value.trim();
   clearWeatherData();
   cityInfo = getGeoCoordinates(city);
   getCityLatLon(cityInfo);
-  addCityToHistory(city);
+  checkSavedCities(city);
 };
+
 
 function searchedCityBtn(city) {
   let cityInfo = {}, data = [];
   clearWeatherData();
+  console.log(city);
   cityInfo = getGeoCoordinates(city);
   getCityLatLon(cityInfo);
-  addCityToHistory(city);
-}
+};
 
 function clearWeatherData() {
   let currDayDataEl = document.getElementById("currDayData");
@@ -264,13 +265,23 @@ function addCityToHistory(city) {
 
   let searchedCityEl = document.getElementById("localStorage");
   let searchedCollectionItem = document.createElement("button");
-  searchedCollectionItem.setAttribute("type", "button");
+  //searchedCollectionItem.setAttribute("type", "button");
   searchedCollectionItem.setAttribute("id", "savedCity");
   searchedCollectionItem.setAttribute("class", "collection-item");
-  searchedCollectionItem.textContent = city;
-  searchedCollectionItem.setAttribute("onclick", `searchedCityBtn(${city})`);
+  searchedCollectionItem.textContent = `${city} `;
   searchedCityEl.appendChild(searchedCollectionItem);
 };
+
+function checkSavedCities(city) {
+  let savedCitiesEl = document.querySelectorAll("#localStorage");
+  savedCitiesEl.forEach((savedCityEl) => {
+    let savedCities = savedCityEl.textContent.split(" ");
+    if (savedCityEl.textContent === "" ||
+      !savedCities.includes(city)) {
+      addCityToHistory(city);
+    }
+  })
+}
 
 function addToLocalStorage(cities) {
 
@@ -278,18 +289,17 @@ function addToLocalStorage(cities) {
     localStorage.setItem("data", JSON.stringify([cities]));
   } else {
     let arrLocalStorage = JSON.parse(localStorage.getItem("data"));
-    arrLocalStorage.push(cities);
-    localStorage.setItem("data", JSON.stringify(arrLocalStorage));
+    if (Array.prototype.includes.call(arguments, cities.cityId)) {
+      let isMatch = true;
+    } else {
+      arrLocalStorage.push(cities);
+      localStorage.setItem("data", JSON.stringify(arrLocalStorage));
+    }
   }
-
 }
-
-
 
 document.getElementById("get-location").onclick = function () {
   searchBtn();
 };
 
-// document.getElementById("savedCity").onclick = function () {
-//   searchedCityBtn();
-// };
+document.getElementById("savedCity").addEventListener("click", function () { searchedCityBtn(city); });
