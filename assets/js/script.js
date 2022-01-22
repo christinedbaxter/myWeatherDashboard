@@ -215,7 +215,7 @@ function populateFutureCards(fData) {
 
   let resultsCardData = document.createElement("div");
   resultsCardData.setAttribute("id", "futureCard");
-  resultsCardData.setAttribute("class", "card small blue-grey darken-1 col s12 m3 l2.25");
+  resultsCardData.setAttribute("class", "card small blue-grey darken-1 col s12 m3 l2.5");
   futureDay.appendChild(resultsCardData);
 
   let resultsCardImg = document.createElement("div");
