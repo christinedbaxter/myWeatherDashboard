@@ -96,7 +96,7 @@ THEN I am again presented with current and future conditions for that city
 
 You are required to submit BOTH of the following for review:
 
-- Deployed Application: &nbsp; [Live URL](https://christinedbaxter.github.io/myweatherDashboard/)
+- Deployed Application: &nbsp; [Live URL](https://christinedbaxter.github.io/myWeatherDashboard/)
 
 - GitHub Repository: &nbsp; [GitHub Repository URL](https://github.com/christinedbaxter/myWeatherDashboard)
 
