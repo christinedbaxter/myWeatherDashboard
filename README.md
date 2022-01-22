@@ -121,7 +121,7 @@ Please note this website was designed with a mobile-first mindset and uses the f
 
 The following animation demonstrates the application functionality:
 
-![Demonstration of the Weather Dashboard Challenge.](./assets/images/m4-codingQuizChallenge-baxter.gif)
+![Demonstration of the Weather Dashboard Challenge.](./assets/images)
 
 [back to top](#table-of-contents)
 
