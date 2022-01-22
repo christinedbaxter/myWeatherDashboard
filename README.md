@@ -96,13 +96,13 @@ THEN I am again presented with current and future conditions for that city
 
 You are required to submit BOTH of the following for review:
 
-- Deployed Application: &nbsp; [Live URL](https://baxters4karma.github.io/myweatherDashboard/)
+- Deployed Application: &nbsp; [Live URL](https://christinedbaxter.github.io/myweatherDashboard/)
 
-- GitHub Repository: &nbsp; [GitHub Repository URL](https://github.com/baxters4karma/myWeatherDashboard)
+- GitHub Repository: &nbsp; [GitHub Repository URL](https://github.com/christinedbaxter/myWeatherDashboard)
 
-- GitHub Project: [Link to project](https://github.com/baxters4karma/myweatherDashboard/projects)
+- GitHub Project: [Link to project](https://github.com/christinedbaxter/myweatherDashboard/projects)
 
-- GitHub Issues: [Link to closed issues](https://github.com/baxters4karma/myweatherDashboard/issues)
+- GitHub Issues: [Link to closed issues](https://github.com/christinedbaxter/myweatherDashboard/issues)
 
 [back to top](#table-of-contents)
 
