@@ -215,17 +215,17 @@ function populateFutureCards(fData) {
 
   let resultsCardData = document.createElement("div");
   resultsCardData.setAttribute("id", "futureCard");
-  resultsCardData.setAttribute("class", "card small blue-grey darken-1 col s12 m3 l2.5");
+  resultsCardData.setAttribute("class", "card small blue-grey darken-1 col s12 m3 l2.25");
   futureDay.appendChild(resultsCardData);
 
   let resultsCardImg = document.createElement("div");
-  resultsCardImg.setAttribute("class", "card-image valign-wrapper");
+  resultsCardImg.setAttribute("class", "card-image");
   resultsCardData.appendChild(resultsCardImg);
 
   let resultsIconImg = document.createElement("img");
   resultsIconImg.setAttribute("id", "futureWeatherIcon");
   resultsIconImg.setAttribute("src", `${fData.dWeatherIconId}`);
-  resultsIconImg.setAttribute("alt", `${fData.dWeatherIconDesc}`);
+  resultsIconImg.setAttribute("alt", `${fData.dWeatherDesc}`);
   resultsCardImg.appendChild(resultsIconImg);
 
   let resultsIconTitle = document.createElement("span");
