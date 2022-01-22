@@ -1,28 +1,6 @@
 const cityNameEl = document.querySelector("input");
 
 function searchBtn() {
-<<<<<<< HEAD
-  var CITY = cityNameEl.value.trim();
-  var currDayDataEl = document.getElementById("currDayData");
-  var futureDayDataEl = document.getElementById("futureDayData");
-  var starterTextCurrEl = document.getElementById("starterTextCurr");
-  var starterTextFutureEl = document.getElementById("starterTextFuture")
-  formEl.reset();
-
-  if (currDayDataEl.hasChildNodes()) {
-    currDayDataEl.replaceChildren();
-    futureDayDataEl.replaceChildren();
-    getLatLon(CITY);
-  } else {
-    starterTextCurrEl.remove();
-    starterTextFutureEl.remove();
-    getLatLon(CITY);
-  }
-};
-
-function getLatLon(CITY) {
-  var requestUrl = getURL(CITY, undefined, undefined, undefined);
-=======
   let cityInfo = {}, data = {};
   let city = cityNameEl.value.trim();
   clearWeatherData();
@@ -87,7 +65,6 @@ function getWeatherData(cityData) {
   let lon = cityData.cityLon;
   let weatherAppId = "a77eee0f49abe8e6331cd9b225df2834";
   let weatherUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly,alerts&units=imperial&appid=${weatherAppId}`;
->>>>>>> develop
 
   fetch(weatherUrl)
     .then(function (res) {
@@ -96,35 +73,18 @@ function getWeatherData(cityData) {
       }
     })
     .then(function (data) {
-<<<<<<< HEAD
-      cityId = CITY;
-      cityLat = data[0].lat;
-      cityLon = data[0].lon;
-      cityData = { cityId, cityLat, cityLon };
-      cities.push(cityData);
-=======
       return (data);
     })
     .then(function (data) {
       getCurrentWeather(data, city);
       getFutureWeather(data, city);
       return;
->>>>>>> develop
     })
 };
 
 function getUviColor(uvi) {
   var uviNum = uvi, color = "";
 
-<<<<<<< HEAD
-function populateSearchedCities() {
-  var CITY = cities[j].cityId;
-  var lat = cities[j].cityLat;
-  var lon = cities[j].cityLon;
-  var savedCityLink = getURL(CITY, lat, lon);
-  var searchedCityEl = document.getElementById("localStorage");
-  var searchedCollectionItem = document.createElement("a");
-=======
   //Select correct UV background color based on Index value
   if (uviNum >= 11) {
     color = "violet";
@@ -159,7 +119,6 @@ function getCurrentWeather(data, city) {
   let cTimeZone = data.timezone;
 
   let cData = { cityId, cityLat, cityLon, cDate, cTemp, cHumidity, cUvi, cUviColor, cWindSpeed, cWeatherDesc, cWeatherIconId, cTimeZone };
->>>>>>> develop
 
   populateCurrCard(cData);
   addToLocalStorage(cData);
@@ -310,29 +269,6 @@ function addCityToHistory(city) {
   let searchedCollectionItem = document.createElement("button");
   //searchedCollectionItem.setAttribute("type", "button");
   searchedCollectionItem.setAttribute("id", "savedCity");
-<<<<<<< HEAD
-  searchedCollectionItem.setAttribute("href", savedCityLink);
-  searchedCollectionItem.textContent = CITY;
-
-  searchedCityEl.appendChild(searchedCollectionItem);
-};
-
-// function linkToSavedCity(CITY, j) {
-//   getWeather(cities, j);
-// }
-
-document.getElementById("input-city")
-  .addEventListener("keypress", function (event) {
-    if (event.keyCode === 13) {
-      event.preventDefault();
-      document.getElementById("get-location").click();
-    }
-  });
-
-document.getElementById("get-location").onclick = function () {
-  searchBtn();
-}
-=======
   searchedCollectionItem.setAttribute("class", "collection-item");
   searchedCollectionItem.textContent = `${city} `;
   searchedCityEl.appendChild(searchedCollectionItem);
@@ -369,4 +305,3 @@ document.getElementById("get-location").onclick = function () {
 };
 
 document.getElementById("savedCity").addEventListener("click", function () { searchedCityBtn(city); });
->>>>>>> develop
