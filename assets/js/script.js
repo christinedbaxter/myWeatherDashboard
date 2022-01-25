@@ -1,23 +1,5 @@
 const cityNameEl = document.querySelector("input");
 
-function searchBtn() {
-  let cityInfo = {}, data = {};
-  let city = cityNameEl.value.trim();
-  clearWeatherData();
-  cityInfo = getGeoCoordinates(city);
-  getCityLatLon(cityInfo);
-  checkSavedCities(city);
-};
-
-
-function searchedCityBtn(city) {
-  let cityInfo = {}, data = [];
-  clearWeatherData();
-  console.log(city);
-  cityInfo = getGeoCoordinates(city);
-  getCityLatLon(cityInfo);
-};
-
 function clearWeatherData() {
   let currDayDataEl = document.getElementById("currDayData");
   let futureDayDataEl = document.getElementById("futureDayData");
@@ -39,25 +21,26 @@ function getGeoCoordinates(city) {
   let weatherAppId = "a77eee0f49abe8e6331cd9b225df2834";
   let geoCoordUrl =
     `https://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=${weatherAppId}`;
-
-  return fetch(geoCoordUrl)
-    .then((response) => response.json())
-    .then((data) => {
-      let cityData = {
-        cityId: city,
-        cityLat: data[0].lat,
-        cityLon: data[0].lon
-      }
-      return cityData;
-    });
+  return geoCoordUrl;
 }
 
-function getCityLatLon(cityData) {
+function getCityLatLon(cityUrl) {
+  let cityData = fetch(cityUrl)
+    .then((response) => response.json())
+    .then((data) => {
+      return cityInfo = {
+        cityId: data[0].name,
+        cityLat: data[0].lat,
+        cityLon: data[0].lon
+      };
+    });
+
   cityData.then((cityInfo) => {
     data = getWeatherData(cityInfo);
     return data;
   });
-}
+  return;
+};
 
 function getWeatherData(cityData) {
   let city = cityData.cityId;
@@ -267,8 +250,9 @@ function addCityToHistory(city) {
 
   let searchedCityEl = document.getElementById("localStorage");
   let searchedCollectionItem = document.createElement("button");
-  //searchedCollectionItem.setAttribute("type", "button");
+  searchedCollectionItem.setAttribute("type", "button");
   searchedCollectionItem.setAttribute("id", "savedCity");
+  searchedCollectionItem.setAttribute("onclick", "searchedCityBtn(event)");
   searchedCollectionItem.setAttribute("class", "collection-item");
   searchedCollectionItem.textContent = `${city} `;
   searchedCityEl.appendChild(searchedCollectionItem);
@@ -294,14 +278,31 @@ function addToLocalStorage(cities) {
     if (Array.prototype.includes.call(arguments, cities.cityId)) {
       let isMatch = true;
     } else {
+      isMatch = false;
+    }
+
+    if (!isMatch) {
       arrLocalStorage.push(cities);
       localStorage.setItem("data", JSON.stringify(arrLocalStorage));
     }
   }
 }
 
+function searchedCityBtn(e) {
+  let city = e.target.innerText;
+  clearWeatherData();
+  let cityUrl = getGeoCoordinates(city);
+  getCityLatLon(cityUrl);
+};
+
+function searchBtn() {
+  let city = cityNameEl.value.trim();
+  clearWeatherData();
+  let cityUrl = getGeoCoordinates(city);
+  getCityLatLon(cityUrl);
+  checkSavedCities(city);
+};
+
 document.getElementById("get-location").onclick = function () {
   searchBtn();
 };
-
-document.getElementById("savedCity").addEventListener("click", function () { searchedCityBtn(city); });
