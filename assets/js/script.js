@@ -1,6 +1,7 @@
 const cityNameEl = document.querySelector("input");
 const cityInputEl = document.getElementById("input-city");
 
+// Clear starter text or existing city information
 function clearWeatherData() {
   let currDayDataEl = document.getElementById("currDayData");
   let futureDayDataEl = document.getElementById("futureDayData");
@@ -18,13 +19,15 @@ function clearWeatherData() {
   }
 };
 
-function getGeoCoordinates(city) {
+// Get Weather API URL using entered city
+function getGeoCoordUrl(city) {
   let weatherAppId = "a77eee0f49abe8e6331cd9b225df2834";
   let geoCoordUrl =
     `https://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=${weatherAppId}`;
   return geoCoordUrl;
 }
 
+// Get name, latitude, and longitude for entered city
 function getCityLatLon(cityUrl) {
   let cityData = fetch(cityUrl)
     .then((response) => response.json())
@@ -36,6 +39,7 @@ function getCityLatLon(cityUrl) {
       };
     });
 
+  // Using fetched city data call function for getting city data detail
   cityData.then((cityInfo) => {
     data = getWeatherData(cityInfo);
     return data;
@@ -43,6 +47,7 @@ function getCityLatLon(cityUrl) {
   return;
 };
 
+// Use city data (city name, lat, lon) to fetch detailed current and future data
 function getWeatherData(cityData) {
   let city = cityData.cityId;
   let lat = cityData.cityLat;
@@ -66,6 +71,7 @@ function getWeatherData(cityData) {
     })
 };
 
+// Get UVI Color based on Index value
 function getUviColor(uvi) {
   var uviNum = uvi, color = "";
 
@@ -104,10 +110,14 @@ function getCurrentWeather(data, city) {
 
   let cData = { cityId, cityLat, cityLon, cDate, cTemp, cHumidity, cUvi, cUviColor, cWindSpeed, cWeatherDesc, cWeatherIconId, cTimeZone };
 
+  // Call function to populate current day weather cards
   populateCurrCard(cData);
+
+  // Add user entered city to local storage
   addToLocalStorage(cData);
 };
 
+// Get future weather data
 function getFutureWeather(data, city) {
   let cityId = city;
   let cityLat = data.lat;
@@ -130,15 +140,18 @@ function getFutureWeather(data, city) {
 
     let fData = { cityId, cityLat, cityLon, dTimeZone, dDate, dTempL, dTempH, dHumidity, dUvi, dUviColor, dWindSpeed, dWeatherDesc, dWeatherIconId };
 
+    // Call function to populate future or 5 days of weather cards
     populateFutureCards(fData);
   }
 };
 
+// Get weather icon using the weather API's icon URL and icon ID
 function getWeatherIcon(dIconId) {
   let weatherIconUrl = `http://openweathermap.org/img/wn/${dIconId}@2x.png`;
   return weatherIconUrl;
 };
 
+// Populate current day weather card
 function populateCurrCard(cData) {
   let currDay = document.getElementById("currDayData");
 
@@ -194,6 +207,7 @@ function populateCurrCard(cData) {
   resultsCurrCardContent.appendChild(currDayUvi);
 };
 
+// Populate future day weather cards
 function populateFutureCards(fData) {
   let futureDay = document.getElementById("futureDayData");
 
@@ -247,8 +261,8 @@ function populateFutureCards(fData) {
   resultsCardContent.appendChild(resultsUvi);
 };
 
+// Add current city to left nav under Search button
 function addCityToHistory(city) {
-
   let searchedCityEl = document.getElementById("localStorage");
   let searchedCollectionItem = document.createElement("button");
   searchedCollectionItem.setAttribute("type", "button");
@@ -259,6 +273,7 @@ function addCityToHistory(city) {
   searchedCityEl.appendChild(searchedCollectionItem);
 };
 
+// Check saved city list and do not add city if already existing
 function checkSavedCities(city) {
   let savedCitiesEl = document.querySelectorAll("#localStorage");
   savedCitiesEl.forEach((savedCityEl) => {
@@ -270,8 +285,9 @@ function checkSavedCities(city) {
   })
 }
 
+// Add cities array to local storage, checking to see if data element exists.
+// If data is not available, it is created to store searched cities
 function addToLocalStorage(cities) {
-
   if (!JSON.parse(localStorage.getItem("data"))) {
     localStorage.setItem("data", JSON.stringify([cities]));
   } else {
@@ -289,25 +305,29 @@ function addToLocalStorage(cities) {
   }
 }
 
+// Display current and future weather data for searched/saved city
 function searchedCityBtn(e) {
   let city = e.target.innerText;
   clearWeatherData();
-  let cityUrl = getGeoCoordinates(city);
+  let cityUrl = getGeoCoordUrl(city);
   getCityLatLon(cityUrl);
 };
 
+// Display current and future weather data for entered city
 function searchBtn() {
   let city = cityNameEl.value.trim();
   clearWeatherData();
-  let cityUrl = getGeoCoordinates(city);
+  let cityUrl = getGeoCoordUrl(city);
   getCityLatLon(cityUrl);
   checkSavedCities(city);
 };
 
+// Call function when Search button is clicked
 document.getElementById("get-location").onclick = function () {
   searchBtn();
 };
 
+// Call function when enter key is pressed after city is entered in text input field
 cityInputEl.addEventListener("keypress", (event) => {
   if (event.keyCode === 13) {
     event.preventDefault();
