@@ -1,4 +1,5 @@
 const cityNameEl = document.querySelector("input");
+const cityInputEl = document.getElementById("input-city");
 
 function clearWeatherData() {
   let currDayDataEl = document.getElementById("currDayData");
@@ -306,3 +307,10 @@ function searchBtn() {
 document.getElementById("get-location").onclick = function () {
   searchBtn();
 };
+
+cityInputEl.addEventListener("keypress", (event) => {
+  if (event.keyCode === 13) {
+    event.preventDefault();
+    searchBtn();
+  }
+});
