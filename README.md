@@ -38,7 +38,7 @@ SO THAT I can plan a trip accordingly
 
 ## Acceptance Criteria
 
-### General
+### General Criteria
 
 ```
 GIVEN a weather dashboard with form inputs
@@ -56,7 +56,7 @@ THEN I am again presented with current and future conditions for that city
 
 [back to top](#table-of-contents)
 
-### Technical
+### Technical Criteria
 
 - No errors should be produced in console when inspected using Chrome DevTools.
 - Satisfies all of the above acceptance criteria.
@@ -65,7 +65,7 @@ THEN I am again presented with current and future conditions for that city
 
 [back to top](#table-of-contents)
 
-### Deployment
+### Deployment Criteria
 
 - Application deployed at live URL.
 - Application loads with no errors.
@@ -74,15 +74,15 @@ THEN I am again presented with current and future conditions for that city
 
 [back to top](#table-of-contents)
 
-### Quality
+### Quality Criteria
 
-#### Application
+#### Application Criteria
 
 - Application user experience is intuitive and easy to navigate.
 - Application user interface style is clean and polished.
 - Application resembles the mock-up functionality provided in the Challenge instructions.
 
-#### Repository
+#### Repository Criteria
 
 - Repository has a unique name.
 - Repository follows best practices for file structure and naming conventions.
@@ -102,7 +102,7 @@ You are required to submit BOTH of the following for review:
 
 - GitHub Project: [Link to project](https://github.com/christinedbaxter/myweatherDashboard/projects)
 
-- GitHub Issues: [Link to closed issues](https://github.com/christinedbaxter/myweatherDashboard/issues)
+- GitHub Issues: [Link to issues](https://github.com/christinedbaxter/myweatherDashboard/issues)
 
 [back to top](#table-of-contents)
 
@@ -121,7 +121,7 @@ Please note this website was designed with a mobile-first mindset and uses the f
 
 The following animation demonstrates the application functionality:
 
-![Demonstration of the Weather Dashboard Challenge.](./assets/images)
+![Demonstration of the Weather Dashboard Challenge.](./assets/images/WeatherDashboard.gif)
 
 [back to top](#table-of-contents)
 
