@@ -6,6 +6,13 @@
 	margin: 0;
 }
 
+body {
+	background-image: url("../images/weatherStationBg.jpeg");
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-size: cover;
+}
+
 button {
 	width: 100%;
 }
@@ -42,15 +49,6 @@ nav .brand-logo {
 	padding-bottom: 2px;
 	margin-bottom: 2px;
 }
-
-/* #searchResultsContent {
-	background-image: url(../images/weatherStationBg.jpeg);
-	background-size: contain;
-	background-repeat: no-repeat;
-	height: auto;
-	background-position-y: 0.5vh;
-	background-position-x: -8vh;
-} */
 
 .card.small {
 	text-align: center;
@@ -108,4 +106,16 @@ nav .brand-logo {
 	font-size: 18px;
 	font-weight: bold;
 	margin: 0px;
+}
+
+#starterTextCurr {
+	color: whitesmoke;
+}
+
+#starterTextFuture {
+	color: whitesmoke;
+}
+
+input {
+	color: whitesmoke;
 }
